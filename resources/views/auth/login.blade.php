@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Login - Sistem Keuangan Mancraft</title>
+    <title>Login - Sistem Keuangan Alam Sari</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -98,11 +98,11 @@
     <div class="glass-effect p-8 rounded-2xl shadow-2xl w-full max-w-md">
         <div class="text-center mb-8">
             <div class="logo-container mb-4">
-                <img src="{{ asset('Logo_Mancraft.jpg') }}" alt="Mancraft Logo"
+                <img src="{{ asset('AlamSari.png') }}" alt="Alam Sari Logo"
                     class="logo-image w-20 h-20 object-contain">
             </div>
-            <h2 class="text-3xl font-bold text-primary">Mancraft Finance</h2>
-            <p class="text-primary opacity-75">Sistem Manajemen Keuangan</p>
+            <h2 class="text-3xl font-bold text-primary">Alam Sari Finance</h2>
+            <p class="text-primary opacity-75">Sistem Manajemen Properti</p>
         </div>
 
         <!-- Session Status -->
@@ -165,7 +165,7 @@
         </form>
 
         <p class="mt-6 text-center text-sm text-primary opacity-50">
-            &copy; 2025 Mancraft Barbershop. All rights reserved.
+            &copy; 2025 Alam Sari Properti. All rights reserved.
         </p>
     </div>
 

@@ -129,7 +129,7 @@
 <body>
     <div class="header">
         <div style="text-align: center; margin-bottom: 20px;">
-            <img src="/public/Logo_Mancraft.jpg" alt="Logo" style="max-width: 150px; height: auto;" />
+            <img src="/public/AlamSari.png" alt="Alam Sari Properti" style="max-width: 150px; height: auto;" />
         </div>
         <div class="company-name">Manajemen Keuangan</div>
         <div class="report-title">LAPORAN ARUS KAS</div>

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Kelola Layanan')
+@section('title', 'Kelola Properti')
 
 <style>
 	/* --- Custom Animations & Styles --- */
@@ -90,10 +90,10 @@
 @section('content')
 <div class="container mx-auto py-8 fade-in-up">
 	<div class="flex items-center justify-between mb-6">
-		<h1 class="text-2xl font-bold">Kelola Layanan</h1>
+		<h1 class="text-2xl font-bold">Kelola Properti</h1>
 		@if(auth()->user()->role === 'admin')
 			<button onclick="openModal('create')" class="btn-cta">
-				<i class="fas fa-plus mr-2"></i> Tambah Layanan
+				<i class="fas fa-plus mr-2"></i> Tambah Properti
 			</button>
 		@endif
 	</div>
@@ -102,8 +102,11 @@
 			<table id="services-table" class="min-w-full table-auto border">
 				<thead class="bg-gray-100">
 					<tr>
-						<th class="px-4 py-2 border">Nama Layanan</th>
+						<th class="px-4 py-2 border">Nama Properti</th>
+						<th class="px-4 py-2 border">Tipe</th>
+						<th class="px-4 py-2 border">Lokasi</th>
 						<th class="px-4 py-2 border">Harga</th>
+						<th class="px-4 py-2 border">Status</th>
 						@if(auth()->user()->role === 'admin')
 							<th class="px-4 py-2 border">Aksi</th>
 						@endif
@@ -131,7 +134,7 @@
 			<div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 border-b border-gray-200">
 				<div class="flex items-center justify-between">
 					<h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-						Tambah Layanan Baru
+						Tambah Properti Baru
 					</h3>
 					<button type="button" class="text-gray-400 bg-white hover:text-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" onclick="closeModal()">
 						<span class="sr-only">Close</span>
@@ -149,12 +152,40 @@
 				<input type="hidden" name="_method" id="_method" value="POST">
 				<div class="space-y-4">
 					<div>
-						<label for="name" class="block font-semibold mb-2">Nama Layanan</label>
-						<input type="text" name="name" id="name" required class="w-full border rounded px-3 py-2" placeholder="e.g., Potong Rambut">
+						<label for="name" class="block font-semibold mb-2">Nama Properti</label>
+						<input type="text" name="name" id="name" required class="w-full border rounded px-3 py-2" placeholder="e.g., Rumah Minimalis Modern">
 					</div>
 					<div>
-						<label for="price" class="block font-semibold mb-2">Harga</label>
+						<label for="property_type" class="block font-semibold mb-2">Tipe Properti</label>
+						<select name="property_type" id="property_type" required class="w-full border rounded px-3 py-2">
+							<option value="">-- Pilih Tipe --</option>
+							<option value="rumah">Rumah</option>
+							<option value="tanah">Tanah</option>
+							<option value="ruko">Ruko</option>
+							<option value="apartemen">Apartemen</option>
+							<option value="villa">Villa</option>
+							<option value="gudang">Gudang</option>
+						</select>
+					</div>
+					<div>
+						<label for="location" class="block font-semibold mb-2">Lokasi</label>
+						<input type="text" name="location" id="location" class="w-full border rounded px-3 py-2" placeholder="e.g., Bandung, Jawa Barat">
+					</div>
+					<div>
+						<label for="price" class="block font-semibold mb-2">Harga (Rp)</label>
 						<input type="number" name="price" id="price" required class="w-full border rounded px-3 py-2" placeholder="0" min="1">
+					</div>
+					<div>
+						<label for="status" class="block font-semibold mb-2">Status</label>
+						<select name="status" id="status" required class="w-full border rounded px-3 py-2">
+							<option value="available">Tersedia</option>
+							<option value="pending">Pending</option>
+							<option value="sold">Terjual</option>
+						</select>
+					</div>
+					<div>
+						<label for="description" class="block font-semibold mb-2">Deskripsi</label>
+						<textarea name="description" id="description" rows="3" class="w-full border rounded px-3 py-2" placeholder="Deskripsi properti (opsional)"></textarea>
 					</div>
 				</div>
 			</form>
@@ -206,10 +237,44 @@
                     name: 'name'
                 },
                 { 
+                    data: 'property_type', 
+                    name: 'property_type',
+                    render: function(data) {
+                        const typeMap = {
+                            'rumah': '<span class="px-2 py-1 bg-blue-100 text-blue-800 rounded">Rumah</span>',
+                            'tanah': '<span class="px-2 py-1 bg-green-100 text-green-800 rounded">Tanah</span>',
+                            'ruko': '<span class="px-2 py-1 bg-purple-100 text-purple-800 rounded">Ruko</span>',
+                            'apartemen': '<span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded">Apartemen</span>',
+                            'villa': '<span class="px-2 py-1 bg-pink-100 text-pink-800 rounded">Villa</span>',
+                            'gudang': '<span class="px-2 py-1 bg-gray-100 text-gray-800 rounded">Gudang</span>'
+                        };
+                        return typeMap[data] || data;
+                    }
+                },
+                { 
+                    data: 'location', 
+                    name: 'location',
+                    render: function(data) {
+                        return data || '<span class="text-gray-400">-</span>';
+                    }
+                },
+                { 
                     data: 'price', 
                     name: 'price',
                     render: function(data) {
                         return `<span class="font-bold text-green-600">Rp${parseInt(data).toLocaleString('id-ID')}</span>`;
+                    }
+                },
+                { 
+                    data: 'status', 
+                    name: 'status',
+                    render: function(data) {
+                        const statusMap = {
+                            'available': '<span class="px-2 py-1 bg-green-100 text-green-800 rounded font-semibold">Tersedia</span>',
+                            'pending': '<span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded font-semibold">Pending</span>',
+                            'sold': '<span class="px-2 py-1 bg-red-100 text-red-800 rounded font-semibold">Terjual</span>'
+                        };
+                        return statusMap[data] || data;
                     }
                 }
                 @if(auth()->user()->role === 'admin')
@@ -262,11 +327,11 @@
         window.openModal = function(mode, id = null) {
             resetForm();
             if (mode === 'create') {
-                $('#modal-title').text('Tambah Layanan Baru');
+                $('#modal-title').text('Tambah Properti Baru');
                 $('#_method').val('POST');
                 $('#service-form').removeAttr('action');
             } else {
-                $('#modal-title').text('Edit Layanan');
+                $('#modal-title').text('Edit Properti');
                 $('#_method').val('PUT');
                 $('#service-form').attr('action', `{{ url('layanan') }}/${id}`);
                 fetchServiceData(id);
@@ -291,14 +356,18 @@
                 .done(function(data) {
                     console.log('Service data received:', data); // Debug log
                     $('#name').val(data.name || '');
+                    $('#property_type').val(data.property_type || 'rumah');
+                    $('#location').val(data.location || '');
                     $('#price').val(data.price || '');
+                    $('#status').val(data.status || 'available');
+                    $('#description').val(data.description || '');
                 })
                 .fail(function(xhr, status, error) {
                     console.error('Error fetching service data:', xhr);
                     console.error('Status:', status);
                     console.error('Error:', error);
                     console.error('Response:', xhr.responseText);
-                    showNotification('Error loading service data: ' + error, 'error');
+                    showNotification('Error loading property data: ' + error, 'error');
                 });
         };
 
@@ -328,7 +397,7 @@
                 success: function(res) {
                     console.log('Success response:', res); // Debug log
                     $('#service-modal').addClass('hidden');
-                    showNotification(res.message || 'Layanan berhasil disimpan!', 'success');
+                    showNotification(res.message || 'Properti berhasil disimpan!', 'success');
                     table.ajax.reload();
                 },
                 error: function(xhr) {
@@ -354,7 +423,7 @@
                         showNotification('Mohon periksa input Anda.', 'error');
                     } else {
                         console.error('Ajax error:', xhr.responseText);
-                        showNotification('Gagal menyimpan layanan', 'error');
+                        showNotification('Gagal menyimpan properti', 'error');
                     }
                 }
             });
@@ -363,7 +432,7 @@
         // --- Delete Handler ---
         window.deleteService = function(id) {
             Swal.fire({
-                title: 'Yakin ingin menghapus layanan ini?',
+                title: 'Yakin ingin menghapus properti ini?',
                 text: 'Tindakan ini tidak dapat dibatalkan.',
                 icon: 'warning',
                 showCancelButton: true,
@@ -380,13 +449,13 @@
                             _token: '{{ csrf_token() }}'
                         },
                         success: function(res) {
-                            showNotification(res.message || 'Layanan berhasil dihapus!', 'success');
+                            showNotification(res.message || 'Properti berhasil dihapus!', 'success');
                             table.ajax.reload();
                         },
                         error: function(xhr) {
                             console.error('Delete error:', xhr);
                             console.error('Response:', xhr.responseText);
-                            showNotification('Gagal menghapus layanan', 'error');
+                            showNotification('Gagal menghapus properti', 'error');
                         }
                     });
                 }

@@ -26,7 +26,7 @@ class DashboardController extends Controller
             ->whereYear('transaction_date', $now->subMonth()->year);
         
         // Apply role-based filtering
-        if (auth()->user()->role === 'karyawan') {
+        if (auth()->user()->role === 'agen') {
             $currentMonthQuery->where('user_id', auth()->id());
             $lastMonthQuery->where('user_id', auth()->id());
         }
@@ -78,7 +78,7 @@ class DashboardController extends Controller
         
         // Recent transactions with role-based filtering
         $recentTransactionsQuery = Transaction::with(['user', 'service'])->orderByDesc('created_at')->limit(5);
-        if (auth()->user()->role === 'karyawan') {
+        if (auth()->user()->role === 'agen') {
             $recentTransactionsQuery->where('user_id', auth()->id());
         }
         $recentTransactions = $recentTransactionsQuery->get();
@@ -90,7 +90,7 @@ class DashboardController extends Controller
                      ->whereMonth('transactions.transaction_date', $now->month)
                      ->whereYear('transactions.transaction_date', $now->year);
                 // Add role-based filtering for employees
-                if (auth()->user()->role === 'karyawan') {
+                if (auth()->user()->role === 'agen') {
                     $join->where('transactions.user_id', auth()->id());
                 }
             });
@@ -120,7 +120,7 @@ class DashboardController extends Controller
                 ->whereYear('transaction_date', $month->year);
             
             // Apply role-based filtering
-            if (auth()->user()->role === 'karyawan') {
+            if (auth()->user()->role === 'agen') {
                 $incomeQuery->where('user_id', auth()->id());
                 $expenseQuery->where('user_id', auth()->id());
             }

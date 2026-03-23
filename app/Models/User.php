@@ -59,11 +59,11 @@ class User extends Authenticatable
     }
 
     /**
-     * Scope a query to only include users with 'karyawan' role.
+     * Scope a query to only include users with 'agen' role.
      */
-    public function scopeIsKaryawan($query)
+    public function scopeIsAgen($query)
     {
-        return $query->where('role', 'karyawan');
+        return $query->where('role', 'agen');
     }
 
     /**

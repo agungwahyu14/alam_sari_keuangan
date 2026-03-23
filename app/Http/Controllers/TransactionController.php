@@ -31,7 +31,7 @@ class TransactionController extends Controller
             $query = Transaction::with(['user', 'service']);
             
             // Role-based filtering: Employees can only see their own transactions
-            if (auth()->user()->role === 'karyawan') {
+            if (auth()->user()->role === 'agen') {
                 $query->where('user_id', auth()->id());
             }
             
@@ -75,7 +75,7 @@ class TransactionController extends Controller
         $data = $request->validated();
         
         // For employees, automatically set their user_id for income transactions
-        if (auth()->user()->role === 'karyawan' && $data['type'] === 'income') {
+        if (auth()->user()->role === 'agen' && $data['type'] === 'income') {
             $data['user_id'] = auth()->id();
         }
         
@@ -96,7 +96,7 @@ class TransactionController extends Controller
     public function show(Transaction $transaksi)
     {
         // Role-based access: Employees can only view their own transactions
-        if (auth()->user()->role === 'karyawan' && $transaksi->user_id !== auth()->id()) {
+        if (auth()->user()->role === 'agen' && $transaksi->user_id !== auth()->id()) {
             abort(403, 'Unauthorized access to this transaction.');
         }
         
@@ -117,7 +117,7 @@ class TransactionController extends Controller
     public function edit(Transaction $transaksi)
     {
         // Employees can only edit their own transactions
-        if (auth()->user()->role === 'karyawan' && $transaksi->user_id !== auth()->id()) {
+        if (auth()->user()->role === 'agen' && $transaksi->user_id !== auth()->id()) {
             if (request()->expectsJson()) {
                 return response()->json(['error' => 'Anda hanya bisa mengedit transaksi Anda sendiri.'], 403);
             }
@@ -149,7 +149,7 @@ class TransactionController extends Controller
     public function update(StoreTransactionRequest $request, Transaction $transaksi)
     {
         // Employees can only update their own transactions
-        if (auth()->user()->role === 'karyawan' && $transaksi->user_id !== auth()->id()) {
+        if (auth()->user()->role === 'agen' && $transaksi->user_id !== auth()->id()) {
             if ($request->expectsJson()) {
                 return response()->json(['error' => 'Anda hanya bisa mengedit transaksi Anda sendiri.'], 403);
             }
@@ -159,7 +159,7 @@ class TransactionController extends Controller
         $data = $request->validated();
         
         // For employees, automatically set their user_id for income transactions
-        if (auth()->user()->role === 'karyawan' && $data['type'] === 'income') {
+        if (auth()->user()->role === 'agen' && $data['type'] === 'income') {
             $data['user_id'] = auth()->id();
         }
         
@@ -180,7 +180,7 @@ class TransactionController extends Controller
     public function destroy(Transaction $transaksi)
     {
         // Employees can only delete their own transactions
-        if (auth()->user()->role === 'karyawan' && $transaksi->user_id !== auth()->id()) {
+        if (auth()->user()->role === 'agen' && $transaksi->user_id !== auth()->id()) {
             if (request()->expectsJson()) {
                 return response()->json(['error' => 'Anda hanya bisa menghapus transaksi Anda sendiri.'], 403);
             }

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Kelola Karyawan')
+@section('title', 'Kelola Agen')
 
 @push('styles')
 <style>
@@ -91,9 +91,9 @@
 @section('content')
 <div class="container mx-auto py-8 fade-in-up">
 	<div class="flex items-center justify-between mb-6">
-		<h1 class="text-2xl font-bold">Kelola Karyawan</h1>
+		<h1 class="text-2xl font-bold">Kelola Agen</h1>
 		@if(auth()->user()->role === 'admin')
-			<button id="add-employee-btn" class="btn-cta" onclick="openModal('create')">Tambah Karyawan</button>
+			<button id="add-employee-btn" class="btn-cta" onclick="openModal('create')">Tambah Agen</button>
 		@endif
 	</div>
 	<div class="bg-white rounded-lg shadow-lg p-6" style="box-shadow: 0 4px 24px rgba(34,197,94,0.08);">
@@ -130,7 +130,7 @@
 				<div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 border-b border-gray-200">
 					<div class="flex items-center justify-between">
 						<h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-							Tambah Karyawan
+							Tambah Agen
 						</h3>
 						<button type="button" class="text-gray-400 bg-white hover:text-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" onclick="closeModal()">
 							<span class="sr-only">Close</span>
@@ -160,7 +160,7 @@
 					<div class="mb-4">
 						<label for="modal-email-verified-at" class="block font-semibold mb-2">Tanggal Verifikasi Email</label>
 						<input type="date" name="email_verified_at" id="modal-email-verified-at" class="w-full border rounded px-3 py-2">
-						<small class="text-gray-500 text-sm">Tanggal verifikasi email karyawan</small>
+						<small class="text-gray-500 text-sm">Tanggal verifikasi email agen</small>
 					</div>
 					
 					<div class="mb-4">
@@ -205,7 +205,7 @@
 	$(document).ready(function() {
 		table = $('#employees-table').DataTable({
 			ajax: {
-				url: '{{ route('karyawan.data') }}',
+				url: '{{ route('agen.data') }}',
 				dataSrc: 'data'
 			},
 			columns: [
@@ -273,7 +273,7 @@
 		e.preventDefault();
 		const mode = $('#_method').val() === 'PUT' ? 'edit' : 'create';
 		let url = mode === 'create'
-			? '{{ route('karyawan.store') }}'
+			? '{{ route('agen.store') }}'
 			: $('#employee-form').attr('action') || $('#employee-form').data('action');
 		let method = 'POST'; // Always use POST with Laravel
 		const formData = $(this).serialize();
@@ -316,7 +316,7 @@
 					}
 					showNotification('Mohon periksa input Anda.', 'error');
 				} else {
-					showNotification('Gagal menyimpan data karyawan', 'error');
+					showNotification('Gagal menyimpan data agen', 'error');
 				}
 			}
 		});
@@ -327,7 +327,7 @@
 	function openModal(mode, id = null) {
 		resetForm();
 		if (mode === 'create') {
-			$('#modal-title').text('Tambah Karyawan');
+			$('#modal-title').text('Tambah Agen');
 			$('#_method').val('POST');
 			$('#employee-form').removeAttr('action');
 			$('#employee-form').removeData('action');
@@ -335,9 +335,9 @@
 			$('#password-required').show();
 			$('#modal-password').attr('placeholder', 'Masukkan password');
 		} else {
-			$('#modal-title').text('Edit Karyawan');
+			$('#modal-title').text('Edit Agen');
 			$('#_method').val('PUT');
-			const updateUrl = `{{ route('karyawan.update', ':id') }}`.replace(':id', id);
+			const updateUrl = `{{ route('agen.update', ':id') }}`.replace(':id', id);
 			$('#employee-form').attr('action', updateUrl);
 			$('#employee-form').data('action', updateUrl);
 			console.log('Edit mode - URL set to:', updateUrl); // Debug log
@@ -362,7 +362,7 @@
 
 	// --- Fetch Employee Data for Edit ---
 	function fetchEmployeeData(id) {
-		const fetchUrl = `{{ route('karyawan.show', ':id') }}`.replace(':id', id);
+		const fetchUrl = `{{ route('agen.show', ':id') }}`.replace(':id', id);
 		console.log('Fetching employee data from:', fetchUrl); // Debug log
 		
 		$.get(fetchUrl)
@@ -389,7 +389,7 @@
 	// --- Delete Employee Handler ---
 	function deleteEmployee(id) {
 		Swal.fire({
-			title: 'Yakin ingin menghapus karyawan ini?',
+			title: 'Yakin ingin menghapus agen ini?',
 			text: 'Tindakan ini tidak dapat dibatalkan.',
 			icon: 'warning',
 			showCancelButton: true,
@@ -400,7 +400,7 @@
 		}).then((result) => {
 			if (result.isConfirmed) {
 				$.ajax({
-					url: `{{ route('karyawan.destroy', ':id') }}`.replace(':id', id),
+					url: `{{ route('agen.destroy', ':id') }}`.replace(':id', id),
 					type: 'POST',
 					data: {
 						_token: '{{ csrf_token() }}',
@@ -411,7 +411,7 @@
 						table.ajax.reload();
 					},
 					error: function(xhr) {
-						showNotification('Gagal menghapus karyawan', 'error');
+						showNotification('Gagal menghapus agen', 'error');
 					}
 				});
 			}

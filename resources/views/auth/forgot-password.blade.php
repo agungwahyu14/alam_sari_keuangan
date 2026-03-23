@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lupa Password - Sistem Keuangan Mancraft</title>
+    <title>Lupa Password - Sistem Keuangan Alam Sari</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- SweetAlert2 -->
@@ -77,7 +77,7 @@
 
     <div class="glass-effect rounded-2xl shadow-2xl w-full max-w-md p-8 relative z-10 animate-fade-in">
         <div class="text-center mb-8">
-            <img src="{{ asset('Logo_Mancraft.jpg') }}" alt="Mancraft Logo"
+            <img src="{{ asset('AlamSari.png') }}" alt="Alam Sari Logo"
                 class="w-20 h-20 mx-auto mb-4 rounded-full shadow-lg">
             <h1 class="text-3xl font-bold mb-2" style="color: var(--navy-blue);">Lupa Password?</h1>
             <p class="text-sm opacity-75 text-primary">
@@ -119,7 +119,7 @@
         </div>
 
         <p class="mt-6 text-center text-sm text-primary opacity-50">
-            &copy; 2025 Mancraft Barbershop. All rights reserved.
+            &copy; 2025 Alam Sari Properti. All rights reserved.
         </p>
     </div>
 

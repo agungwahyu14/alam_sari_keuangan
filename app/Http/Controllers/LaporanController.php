@@ -23,7 +23,7 @@ class LaporanController extends Controller
         $end = Carbon::createFromFormat('Y-m', $month)->endOfMonth();
 
         // Role-based filtering: Employees can only see their own reports
-        if (auth()->user() && auth()->user()->role === 'karyawan') {
+        if (auth()->user() && auth()->user()->role === 'agen') {
             $employees = User::where('id', auth()->id())->with([
                 'transactions' => function ($q) use ($start, $end) {
                     $q->where('type', 'income')
@@ -32,7 +32,7 @@ class LaporanController extends Controller
             ])->get();
         } else {
             // Admin can see all employees
-            $employees = User::isKaryawan()->with([
+            $employees = User::isAgen()->with([
                 'transactions' => function ($q) use ($start, $end) {
                     $q->where('type', 'income')
                         ->whereBetween('transaction_date', [$start->toDateString(), $end->toDateString()]);
@@ -43,20 +43,20 @@ class LaporanController extends Controller
         $data = [];
         foreach ($employees as $employee) {
             $totalIncome = $employee->transactions->sum('amount');
-            $salary = $totalIncome * 0.35;
+            $commission = $totalIncome * 0.05; // 5% commission for freelance agents
 
             // Group transactions by service to calculate percentages
             $serviceBreakdown = $employee->transactions->groupBy('service_id')->map(function ($serviceTransactions) use ($totalIncome) {
                 $service = $serviceTransactions->first()->service;
                 $serviceIncome = $serviceTransactions->sum('amount');
-                $serviceSalary = $serviceIncome * 0.35;
+                $serviceCommission = $serviceIncome * 0.05; // 5% commission
 
                 return [
                     'service_name' => $service ? $service->name : 'Unknown Service',
                     'service_income' => $serviceIncome,
-                    'service_salary' => $serviceSalary,
+                    'service_commission' => $serviceCommission,
                     'percentage' => $totalIncome > 0 ? ($serviceIncome / $totalIncome) * 100 : 0,
-                    'salary_percentage' => 35 // Fixed percentage for employees
+                    'commission_percentage' => 5 // Fixed 5% for freelance agents
                 ];
             })->sortByDesc('service_income')->values();
 
@@ -65,7 +65,7 @@ class LaporanController extends Controller
                 'email' => $employee->email,
                 'bank_account' => $employee->bank_account ?: '-',
                 'total_income' => 'Rp ' . number_format($totalIncome, 0, ',', '.'),
-                'salary' => 'Rp ' . number_format($salary, 0, ',', '.'),
+                'commission' => 'Rp ' . number_format($commission, 0, ',', '.'),
                 'service_breakdown' => $serviceBreakdown
             ];
         }
@@ -75,8 +75,8 @@ class LaporanController extends Controller
     // Laporan Arus Kas
     public function cashFlow(Request $request)
     {
-        // Strict RBAC: Karyawan cannot access this report
-        if (auth()->user() && auth()->user()->role === 'karyawan') {
+        // Strict RBAC: Agen cannot access this report
+        if (auth()->user() && auth()->user()->role === 'agen') {
             abort(403, 'Unauthorized action.');
         }
 
@@ -86,7 +86,7 @@ class LaporanController extends Controller
         $query = Transaction::whereBetween('transaction_date', [$startDate, $endDate]);
 
         // Role-based filtering for employees
-        if (auth()->user() && auth()->user()->role === 'karyawan') {
+        if (auth()->user() && auth()->user()->role === 'agen') {
             $query->where('user_id', auth()->id());
         }
 
@@ -125,8 +125,8 @@ class LaporanController extends Controller
     // Laporan Laba Rugi
     public function profitLoss(Request $request)
     {
-        // Strict RBAC: Karyawan cannot access this report
-        if (auth()->user() && auth()->user()->role === 'karyawan') {
+        // Strict RBAC: Agen cannot access this report
+        if (auth()->user() && auth()->user()->role === 'agen') {
             abort(403, 'Unauthorized action.');
         }
 
@@ -136,7 +136,7 @@ class LaporanController extends Controller
         $baseQuery = Transaction::whereBetween('transaction_date', [$startDate, $endDate]);
 
         // Role-based filtering for employees
-        if (auth()->user() && auth()->user()->role === 'karyawan') {
+        if (auth()->user() && auth()->user()->role === 'agen') {
             $baseQuery->where('user_id', auth()->id());
         }
 
@@ -162,8 +162,8 @@ class LaporanController extends Controller
     // Ringkasan Pendapatan per Layanan
     public function serviceRevenue(Request $request)
     {
-        // Strict RBAC: Karyawan cannot access this report
-        if (auth()->user() && auth()->user()->role === 'karyawan') {
+        // Strict RBAC: Agen cannot access this report
+        if (auth()->user() && auth()->user()->role === 'agen') {
             abort(403, 'Unauthorized action.');
         }
 
@@ -175,7 +175,7 @@ class LaporanController extends Controller
             ->with('service');
 
         // Role-based filtering for employees
-        if (auth()->user() && auth()->user()->role === 'karyawan') {
+        if (auth()->user() && auth()->user()->role === 'agen') {
             $query->where('user_id', auth()->id());
         }
 
@@ -206,8 +206,8 @@ class LaporanController extends Controller
     // Laporan Transaksi Harian/Bulanan
     public function transactionReport(Request $request)
     {
-        // Strict RBAC: Karyawan cannot access this report
-        if (auth()->user() && auth()->user()->role === 'karyawan') {
+        // Strict RBAC: Agen cannot access this report
+        if (auth()->user() && auth()->user()->role === 'agen') {
             abort(403, 'Unauthorized action.');
         }
 
@@ -219,7 +219,7 @@ class LaporanController extends Controller
             ->with(['user', 'service']);
 
         // Role-based filtering for employees
-        if (auth()->user() && auth()->user()->role === 'karyawan') {
+        if (auth()->user() && auth()->user()->role === 'agen') {
             $query->where('user_id', auth()->id());
         }
 
@@ -265,7 +265,7 @@ class LaporanController extends Controller
     // Download PDF Reports
     public function downloadCashFlowPdf(Request $request)
     {
-        if (auth()->user() && auth()->user()->role === 'karyawan') {
+        if (auth()->user() && auth()->user()->role === 'agen') {
             abort(403, 'Unauthorized action.');
         }
 
@@ -282,7 +282,7 @@ class LaporanController extends Controller
 
     public function downloadProfitLossPdf(Request $request)
     {
-        if (auth()->user() && auth()->user()->role === 'karyawan') {
+        if (auth()->user() && auth()->user()->role === 'agen') {
             abort(403, 'Unauthorized action.');
         }
 
@@ -299,7 +299,7 @@ class LaporanController extends Controller
 
     public function downloadServiceRevenuePdf(Request $request)
     {
-        if (auth()->user() && auth()->user()->role === 'karyawan') {
+        if (auth()->user() && auth()->user()->role === 'agen') {
             abort(403, 'Unauthorized action.');
         }
 
@@ -322,7 +322,7 @@ class LaporanController extends Controller
         $end = Carbon::createFromFormat('Y-m', $month)->endOfMonth();
 
         // Employees can only download their own salary slip
-        if (auth()->user() && auth()->user()->role === 'karyawan') {
+        if (auth()->user() && auth()->user()->role === 'agen') {
             $employee = User::where('id', auth()->id())->with([
                 'transactions' => function ($q) use ($start, $end) {
                     $q->where('type', 'income')
@@ -343,7 +343,7 @@ class LaporanController extends Controller
         }
 
         if (!$employee) {
-            return redirect()->back()->with('error', 'Data karyawan tidak ditemukan');
+            return redirect()->back()->with('error', 'Data agen tidak ditemukan');
         }
 
         $data = $this->getSalarySlipData($employee, $start, $end);
@@ -357,7 +357,7 @@ class LaporanController extends Controller
     // Download Salary Report PDF for Admin
     public function downloadSalaryReportPdf(Request $request)
     {
-        if (auth()->user() && auth()->user()->role === 'karyawan') {
+        if (auth()->user() && auth()->user()->role === 'agen') {
             abort(403, 'Unauthorized action.');
         }
 
@@ -365,7 +365,7 @@ class LaporanController extends Controller
         $start = Carbon::createFromFormat('Y-m', $month)->startOfMonth();
         $end = Carbon::createFromFormat('Y-m', $month)->endOfMonth();
 
-        $employees = User::isKaryawan()->with([
+        $employees = User::isAgen()->with([
             'transactions' => function ($q) use ($start, $end) {
                 $q->where('type', 'income')
                     ->whereBetween('transaction_date', [$start->toDateString(), $end->toDateString()])
@@ -386,7 +386,7 @@ class LaporanController extends Controller
     {
         $query = Transaction::whereBetween('transaction_date', [$startDate, $endDate]);
 
-        if (auth()->user() && auth()->user()->role === 'karyawan') {
+        if (auth()->user() && auth()->user()->role === 'agen') {
             $query->where('user_id', auth()->id());
         }
 
@@ -406,7 +406,7 @@ class LaporanController extends Controller
     {
         $baseQuery = Transaction::whereBetween('transaction_date', [$startDate, $endDate]);
 
-        if (auth()->user() && auth()->user()->role === 'karyawan') {
+        if (auth()->user() && auth()->user()->role === 'agen') {
             $baseQuery->where('user_id', auth()->id());
         }
 
@@ -430,7 +430,7 @@ class LaporanController extends Controller
             ->whereBetween('transaction_date', [$startDate, $endDate])
             ->with('service');
 
-        if (auth()->user() && auth()->user()->role === 'karyawan') {
+        if (auth()->user() && auth()->user()->role === 'agen') {
             $query->where('user_id', auth()->id());
         }
 

@@ -14,7 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('karyawan.index');
+        return view('agen.index');
     }
 
     /**
@@ -22,7 +22,7 @@ class UserController extends Controller
      */
     public function data()
     {
-        $employees = User::isKaryawan()->get();
+        $employees = User::isAgen()->get();
         $data = [];
         foreach ($employees as $employee) {
             $data[] = [
@@ -49,8 +49,8 @@ class UserController extends Controller
     public function store(Request $request)
     {
         // Prevent employees from creating users
-        if (auth()->user()->role === 'karyawan') {
-            return response()->json(['error' => 'Karyawan tidak diizinkan menambah karyawan.'], 403);
+        if (auth()->user()->role === 'agen') {
+            return response()->json(['error' => 'Karyawan tidak diizinkan menambah agen.'], 403);
         }
         
         // Validate the incoming request
@@ -98,8 +98,8 @@ class UserController extends Controller
     public function update(Request $request, User $karyawan)
     {
         // Prevent employees from updating users
-        if (auth()->user()->role === 'karyawan') {
-            return response()->json(['error' => 'Karyawan tidak diizinkan mengedit karyawan.'], 403);
+        if (auth()->user()->role === 'agen') {
+            return response()->json(['error' => 'Karyawan tidak diizinkan mengedit agen.'], 403);
         }
         
         // Validate the incoming request
@@ -140,8 +140,8 @@ class UserController extends Controller
     public function destroy(User $karyawan)
     {
         // Prevent employees from deleting users
-        if (auth()->user()->role === 'karyawan') {
-            return response()->json(['error' => 'Karyawan tidak diizinkan menghapus karyawan.'], 403);
+        if (auth()->user()->role === 'agen') {
+            return response()->json(['error' => 'Karyawan tidak diizinkan menghapus agen.'], 403);
         }
         
         $karyawan->delete();

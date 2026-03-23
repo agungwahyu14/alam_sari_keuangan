@@ -48,13 +48,13 @@ class ResetPasswordNotification extends Notification
         ], false));
 
         return (new MailMessage)
-            ->subject('Reset Password - Mancraft Finance')
+            ->subject('Reset Password - Alam Sari Properti')
             ->greeting('Halo ' . $notifiable->name . '!')
             ->line('Anda menerima email ini karena kami menerima permintaan reset password untuk akun Anda.')
             ->action('Reset Password', $url)
             ->line('Link reset password ini akan kedaluwarsa dalam ' . config('auth.passwords.'.config('auth.defaults.passwords').'.expire') . ' menit.')
             ->line('Jika Anda tidak meminta reset password, abaikan email ini.')
-            ->salutation('Salam, Tim Mancraft Finance');
+            ->salutation('Salam, Tim Alam Sari Properti');
     }
 
     /**

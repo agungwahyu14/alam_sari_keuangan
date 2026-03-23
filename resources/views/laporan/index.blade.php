@@ -303,7 +303,7 @@
         <div class="report-card">
             <div class="border-b border-gray-200 mb-4">
                 <nav class="-mb-px flex">
-                    @if (auth()->user()->role !== 'karyawan')
+                    @if (auth()->user()->role !== 'agen')
                         <button class="tab-button active" onclick="switchTab('cashflow')" id="tab-cashflow">
                             <i class="fas fa-chart-line mr-2"></i>Arus Kas
                         </button>
@@ -317,20 +317,20 @@
                             <i class="fas fa-list mr-2"></i>Laporan Transaksi
                         </button>
                     @endif
-                    <button class="tab-button @if (auth()->user()->role === 'karyawan') active @endif" onclick="switchTab('salary')"
-                        id="tab-salary">
-                        <i class="fas fa-users mr-2"></i>
+                    <button class="tab-button @if (auth()->user()->role === 'agen') active @endif" onclick="switchTab('commission')"
+                        id="tab-commission">
+                        <i class="fas fa-percentage mr-2"></i>
                         @if (auth()->user()->role === 'admin')
-                            Laporan Gaji
+                            Laporan Komisi Agen
                         @else
-                            Slip Gaji
+                            Komisi Saya
                         @endif
                     </button>
                 </nav>
             </div>
 
             <!-- Cash Flow Tab -->
-            @if (auth()->user()->role !== 'karyawan')
+            @if (auth()->user()->role !== 'agen')
                 <div id="cashflow-content" class="tab-content active">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-xl font-semibold">Laporan Arus Kas</h3>
@@ -342,7 +342,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                         <div class="metric-card">
                             <div class="metric-value text-green-600" id="total-income">Rp 0</div>
-                            <div class="text-sm text-gray-600">Total Pemasukan Kas</div>
+                            <div class="text-sm text-gray-600">Total Penjualan Kas</div>
                         </div>
                         <div class="metric-card">
                             <div class="metric-value text-red-600" id="total-expenses">Rp 0</div>
@@ -359,7 +359,7 @@
                             <i class="fas fa-info-circle mr-2"></i>
                             <strong>Catatan:</strong> Laporan arus kas menampilkan transaksi kas masuk dan keluar aktual
                             saja.
-                            Tidak termasuk perhitungan beban gaji karyawan yang belum dibayar.
+                            Tidak termasuk beban komisi agen yang belum dibayar.
                         </p>
                     </div>
 
@@ -375,7 +375,7 @@
                                         Keterangan</th>
                                     <th
                                         class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Karyawan</th>
+                                        Agen</th>
                                     <th
                                         class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Pemasukan</th>
@@ -392,7 +392,7 @@
             @endif
 
             <!-- Profit Loss Tab -->
-            @if (auth()->user()->role !== 'karyawan')
+            @if (auth()->user()->role !== 'agen')
                 <div id="profitloss-content" class="tab-content">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-xl font-semibold">Laporan Laba Rugi</h3>
@@ -404,9 +404,9 @@
                     <div class="mb-4 p-3 bg-yellow-50 border-l-4 border-yellow-400 rounded">
                         <p class="text-sm text-yellow-800">
                             <i class="fas fa-info-circle mr-2"></i>
-                            <strong>Catatan:</strong> Laporan laba rugi menghitung beban gaji karyawan (35% dari pendapatan)
+                            <strong>Catatan:</strong> Laporan laba rugi menghitung beban komisi agen (5% dari penjualan)
                             sebagai kewajiban perusahaan. Total beban & pengeluaran mencakup semua pengeluaran kas aktual
-                            ditambah beban gaji yang belum dibayar.
+                            ditambah beban komisi yang belum dibayar.
                         </p>
                     </div>
 
@@ -424,7 +424,7 @@
                             <h4 class="font-semibold text-lg mb-3">Beban & Pengeluaran</h4>
                             <div class="space-y-2">
                                 <div class="flex justify-between">
-                                    <span>Beban Gaji Karyawan (35%):</span>
+                                    <span>Beban Komisi Agen (5%):</span>
                                     <span class="font-bold text-red-600" id="employee-costs">Rp 0</span>
                                 </div>
                                 <div class="flex justify-between">
@@ -453,7 +453,7 @@
             @endif
 
             <!-- Service Revenue Tab -->
-            @if (auth()->user()->role !== 'karyawan')
+            @if (auth()->user()->role !== 'agen')
                 <div id="service-content" class="tab-content">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-xl font-semibold">Pendapatan per Layanan</h3>
@@ -498,7 +498,7 @@
             @endif
 
             <!-- Transaction Report Tab -->
-            @if (auth()->user()->role !== 'karyawan')
+            @if (auth()->user()->role !== 'agen')
                 <div id="transaction-content" class="tab-content">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-xl font-semibold">Laporan Transaksi</h3>
@@ -542,32 +542,29 @@
             @endif
 
             @if (auth()->user()->role === 'admin')
-                <!-- Salary Report Tab -->
-                <div id="salary-content" class="tab-content">
+                <!-- Commission Report Tab -->
+                <div id="commission-content" class="tab-content">
                     <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-xl font-semibold">Laporan Gaji Karyawan</h3>
+                        <h3 class="text-xl font-semibold">Laporan Komisi Agen Properti</h3>
                         <div class="flex gap-3 items-center">
-                            <form id="salary-filter-form" class="flex gap-3 items-center">
-                                <label for="salary-month" class="font-semibold text-gray-700">Bulan:</label>
-                                <input type="month" id="salary-month" name="month"
+                            <form id="commission-filter-form" class="flex gap-3 items-center">
+                                <label for="commission-month" class="font-semibold text-gray-700">Bulan:</label>
+                                <input type="month" id="commission-month" name="month"
                                     class="border border-gray-300 rounded px-3 py-2" value="{{ date('Y-m') }}">
                                 <button type="submit" class="btn-cta">
                                     <i class="fas fa-filter mr-2"></i>Filter
                                 </button>
                             </form>
-                            <button onclick="downloadSalaryReportPDF()" class="btn-download">
-                                <i class="fas fa-download mr-2"></i>Download PDF
-                            </button>
                         </div>
                     </div>
 
                     <div class="overflow-x-auto table-container">
-                        <table id="salary-table" class="min-w-full">
+                        <table id="commission-table" class="min-w-full">
                             <thead>
                                 <tr>
                                     <th
                                         class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Nama Karyawan</th>
+                                        Nama Agen</th>
                                     <th
                                         class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Email</th>
@@ -576,13 +573,13 @@
                                         Nomor Rekening</th>
                                     <th
                                         class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Total Pemasukan</th>
+                                        Total Penjualan</th>
                                     <th
                                         class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Gaji (35%)</th>
+                                        Komisi (5%)</th>
                                     <th
                                         class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Detail Layanan</th>
+                                        Detail Properti</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200">
@@ -591,32 +588,29 @@
                     </div>
                 </div>
             @else
-                <!-- Employee Salary Slip Tab -->
-                <div id="salary-content" class="tab-content @if (auth()->user()->role === 'karyawan') active @endif">
+                <!-- Agent Commission Slip Tab -->
+                <div id="commission-content" class="tab-content @if (auth()->user()->role === 'agen') active @endif">
                     <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-xl font-semibold">Slip Gaji Saya</h3>
+                        <h3 class="text-xl font-semibold">Komisi Saya</h3>
                         <div class="flex gap-3 items-center">
-                            <form id="salary-filter-form" class="flex gap-3 items-center">
-                                <label for="salary-month" class="font-semibold text-gray-700">Bulan:</label>
-                                <input type="month" id="salary-month" name="month"
+                            <form id="commission-filter-form" class="flex gap-3 items-center">
+                                <label for="commission-month" class="font-semibold text-gray-700">Bulan:</label>
+                                <input type="month" id="commission-month" name="month"
                                     class="border border-gray-300 rounded px-3 py-2" value="{{ date('Y-m') }}">
                                 <button type="submit" class="btn-cta">
                                     <i class="fas fa-filter mr-2"></i>Filter
                                 </button>
                             </form>
-                            <button onclick="downloadSalarySlipPDF()" class="btn-download">
-                                <i class="fas fa-download mr-2"></i>Download PDF
-                            </button>
                         </div>
                     </div>
 
                     <div class="overflow-x-auto table-container">
-                        <table id="salary-table" class="min-w-full">
+                        <table id="commission-table" class="min-w-full">
                             <thead>
                                 <tr>
                                     <th
                                         class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Nama Karyawan</th>
+                                        Nama Agen</th>
                                     <th
                                         class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Email</th>
@@ -625,13 +619,13 @@
                                         Nomor Rekening</th>
                                     <th
                                         class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Total Pemasukan</th>
+                                        Total Penjualan</th>
                                     <th
                                         class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Gaji (35%)</th>
+                                        Komisi (5%)</th>
                                     <th
                                         class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Detail Layanan</th>
+                                        Detail Properti</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200">
@@ -652,7 +646,7 @@
 
     <script>
         const userRole = "{{ auth()->user()->role }}";
-        let cashflowTable, serviceTable, transactionTable, salaryTable;
+        let cashflowTable, serviceTable, transactionTable, commissionTable;
 
         $(document).ready(function() {
             // Initialize tables
@@ -661,10 +655,10 @@
             // Load initial data
             updateAllReports();
 
-            // Salary report filter (both admin and employee)
+            // Commission report filter (both admin and employee)
             $('#salary-filter-form').on('submit', function(e) {
                 e.preventDefault();
-                loadSalaryReport();
+                loadCommissionReport();
             });
         });
 
@@ -686,7 +680,7 @@
             };
 
             // Cash Flow Table
-            if (userRole !== 'karyawan') {
+            if (userRole !== 'agen') {
                 cashflowTable = $('#cashflow-table').DataTable({
                     ...commonConfig,
                     data: [],
@@ -738,7 +732,7 @@
             }
 
             // Service Revenue Table
-            if (userRole !== 'karyawan') {
+            if (userRole !== 'agen') {
                 serviceTable = $('#service-table').DataTable({
                     ...commonConfig,
                     data: [],
@@ -778,7 +772,7 @@
             }
 
             // Transaction Report Table
-            if (userRole !== 'karyawan') {
+            if (userRole !== 'agen') {
                 transactionTable = $('#transaction-report-table').DataTable({
                     ...commonConfig,
                     data: [],
@@ -819,12 +813,12 @@
             }
 
             // Salary Table (both admin and employee)
-            salaryTable = $('#salary-table').DataTable({
+            commissionTable = $('#commission-table').DataTable({
                 ...commonConfig,
                 ajax: {
                     url: '{{ route('laporan.data') }}',
                     data: function(d) {
-                        d.month = $('#salary-month').val();
+                        d.month = $('#commission-month').val();
                     },
                     dataSrc: 'data'
                 },
@@ -848,7 +842,7 @@
                         className: 'text-right'
                     },
                     {
-                        data: 'salary',
+                        data: 'commission',
                         render: function(data) {
                             return `<span class='font-semibold text-blue-600'>${data}</span>`;
                         },
@@ -868,7 +862,7 @@
                                 breakdownHtml +=
                                     `<strong>${service.service_name}</strong>: ${service.percentage.toFixed(1)}% `;
                                 breakdownHtml +=
-                                `(Gaji: ${formatCurrency(service.service_salary)})`;
+                                `(Komisi: ${formatCurrency(service.service_commission)})`;
                                 breakdownHtml += `</div>`;
                             });
                             breakdownHtml += '</div>';
@@ -896,7 +890,7 @@
         }
 
         function updateAllReports() {
-            if (userRole === 'karyawan') {
+            if (userRole === 'agen') {
                 // Only update salary report/slip if needed, though it's usually loaded via DataTable ajax
                 return;
             }
@@ -1020,8 +1014,8 @@
         }
 
         // Load salary report (both admin and employee)
-        function loadSalaryReport() {
-            salaryTable.ajax.reload();
+        function loadCommissionReport() {
+            commissionTable.ajax.reload();
         }
 
         function downloadPDF(reportType) {
@@ -1031,17 +1025,24 @@
             window.open(url, '_blank');
         }
 
-        function downloadSalaryReportPDF() {
-            const month = $('#salary-month').val();
-            const url = `{{ route('laporan.download.salary-report') }}?month=${month}`;
-            window.open(url, '_blank');
+        // Commission report download - Agents work on commission only (5%)
+        function downloadCommissionReportPDF() {
+            Swal.fire({
+                icon: 'info',
+                title: 'Laporan Komisi',
+                text: 'Laporan komisi agen dapat dilihat di tabel. Komisi dihitung 5% dari total penjualan properti.',
+                confirmButtonText: 'OK'
+            });
         }
 
-        @if (auth()->user()->role === 'karyawan')
-            function downloadSalarySlipPDF() {
-                const month = $('#salary-month').val();
-                const url = `{{ route('laporan.download.salary-slip') }}?month=${month}`;
-                window.open(url, '_blank');
+        @if (auth()->user()->role === 'agen')
+            function downloadCommissionSlipPDF() {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Komisi Agen',
+                    text: 'Anda bekerja sebagai agen freelance dengan komisi 5% dari setiap penjualan properti. Lihat detail komisi di tabel di atas.',
+                    confirmButtonText: 'OK'
+                });
             }
         @endif
 

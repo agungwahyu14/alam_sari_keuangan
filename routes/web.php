@@ -20,11 +20,11 @@ Route::middleware(['auth'])->group(function () {
     // Full resource routes for transactions
     Route::resource('transaksi', App\Http\Controllers\TransactionController::class);
 
-    // Karyawan DataTables AJAX data route (must be before resource route) - Admin only
-    Route::get('karyawan/data', [App\Http\Controllers\UserController::class, 'data'])->name('karyawan.data')->middleware('admin');
+    // Agen DataTables AJAX data route (must be before resource route) - Admin only
+    Route::get('agen/data', [App\Http\Controllers\UserController::class, 'data'])->name('agen.data')->middleware('admin');
 
-    // Resource route for karyawan (employee management) - Admin only
-    Route::resource('karyawan', App\Http\Controllers\UserController::class)->middleware('admin');
+    // Resource route for agen (agent management) - Admin only
+    Route::resource('agen', App\Http\Controllers\UserController::class)->middleware('admin');
 
     // Dashboard route
     Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])
@@ -44,8 +44,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/laporan/download/cash-flow', [App\Http\Controllers\LaporanController::class, 'downloadCashFlowPdf'])->name('laporan.download.cash-flow');
     Route::get('/laporan/download/profit-loss', [App\Http\Controllers\LaporanController::class, 'downloadProfitLossPdf'])->name('laporan.download.profit-loss');
     Route::get('/laporan/download/service-revenue', [App\Http\Controllers\LaporanController::class, 'downloadServiceRevenuePdf'])->name('laporan.download.service-revenue');
-    Route::get('/laporan/download/salary-slip', [App\Http\Controllers\LaporanController::class, 'downloadSalarySlipPdf'])->name('laporan.download.salary-slip');
-    Route::get('/laporan/download/salary-report', [App\Http\Controllers\LaporanController::class, 'downloadSalaryReportPdf'])->name('laporan.download.salary-report');
+    // Salary reports disabled - Agents work on commission only (5%)
+    // Route::get('/laporan/download/salary-slip', [App\Http\Controllers\LaporanController::class, 'downloadSalarySlipPdf'])->name('laporan.download.salary-slip');
+    // Route::get('/laporan/download/salary-report', [App\Http\Controllers\LaporanController::class, 'downloadSalaryReportPdf'])->name('laporan.download.salary-report');
 
     // Logout route
     Route::post('/logout', function () {

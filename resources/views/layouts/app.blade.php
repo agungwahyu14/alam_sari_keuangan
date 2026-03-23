@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>
-        @isset($title) {{ $title }} - @endif Mancraft Finance
+        @isset($title) {{ $title }} - @endif Alam Sari Finance
     </title>
 
     <!-- Vite Assets (Alpine.js) -->
@@ -357,9 +357,9 @@
             <div class="flex justify-between items-center px-4">
                 <a href="{{ route('dashboard') }}" id="sidebar-logo"
                     class="logo-container text-white flex items-center space-x-2">
-                    <img src="{{ asset('Logo_Mancraft.jpg') }}" alt="Mancraft Logo"
+                    <img src="{{ asset('AlamSari.png') }}" alt="Alam Sari Logo"
                         class="logo-image w-10 h-10 object-contain">
-                    <span class="sidebar-text text-2xl font-extrabold">Mancraft</span>
+                    <span class="sidebar-text text-2xl font-extrabold">Alam Sari</span>
                 </a>
             </div>
             <nav>
@@ -382,13 +382,13 @@
                 @if (auth()->user()->role === 'admin')
                     <a href="{{ route('layanan.index') }}"
                         class="sidebar-link @if (request()->routeIs('layanan.*')) active @endif flex items-center py-2.5 px-4 rounded text-white hover:text-brand">
-                        <i class="fas fa-scissors mr-3 w-5"></i>
-                        <span>Layanan</span>
+                        <i class="fas fa-building mr-3 w-5"></i>
+                        <span>Properti</span>
                     </a>
-                    <a href="{{ route('karyawan.index') }}"
-                        class="sidebar-link @if (request()->routeIs('karyawan.*')) active @endif flex items-center py-2.5 px-4 rounded text-white hover:text-brand">
-                        <i class="fas fa-users mr-3 w-5"></i>
-                        <span>Karyawan</span>
+                    <a href="{{ route('agen.index') }}"
+                        class="sidebar-link @if (request()->routeIs('agen.*')) active @endif flex items-center py-2.5 px-4 rounded text-white hover:text-brand">
+                        <i class="fas fa-user-tie mr-3 w-5"></i>
+                        <span>Agen Properti</span>
                     </a>
                     <a href="{{ route('admin.chatbot.index') }}"
                         class="sidebar-link @if (request()->routeIs('admin.chatbot.*')) active @endif flex items-center py-2.5 px-4 rounded text-white hover:text-brand">

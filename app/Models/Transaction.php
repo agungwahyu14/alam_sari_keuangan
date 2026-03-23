@@ -5,7 +5,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * Transaction model for Mancraft barbershop
+ * Transaction model for Alam Sari Properti
+ * Handles property transactions with 5% agent commission
  *
  * @property int $id
  * @property string $type
@@ -14,6 +15,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $transaction_date
  * @property int|null $user_id
  * @property int|null $service_id
+ * @property int|null $agent_id
+ * @property string|null $agent_name
+ * @property float $agent_commission
+ * @property float $commission_rate
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  */
@@ -31,6 +36,10 @@ class Transaction extends Model
 		'transaction_date',
 		'user_id',
 		'service_id',
+		'agent_id',
+		'agent_name',
+		'agent_commission',
+		'commission_rate',
 	];
 
 	/**
@@ -41,6 +50,8 @@ class Transaction extends Model
 	protected $casts = [
 		'amount' => 'integer',
 		'transaction_date' => 'date',
+		'agent_commission' => 'decimal:2',
+		'commission_rate' => 'decimal:2',
 	];
 
 	/**
@@ -57,5 +68,13 @@ class Transaction extends Model
 	public function service(): BelongsTo
 	{
 		return $this->belongsTo(Service::class);
+	}
+
+	/**
+	 * Get the agent who handled the transaction.
+	 */
+	public function agent(): BelongsTo
+	{
+		return $this->belongsTo(User::class, 'agent_id');
 	}
 }
