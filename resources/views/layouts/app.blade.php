@@ -349,6 +349,27 @@
 </head>
 
 <body class="font-sans antialiased">
+    @if(request()->is('mockup*'))
+    <div class="bg-slate-900 text-white px-6 py-2.5 text-xs font-semibold flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 sticky top-0 z-[9999] shadow-md">
+        <div class="flex items-center gap-3">
+            <a href="{{ route('mockup.index') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded-lg font-bold inline-flex items-center gap-1.5 transition">
+                <i class="fas fa-th-large"></i>
+                <span>Hub Mockup (/mockup)</span>
+            </a>
+            <span class="text-slate-600">|</span>
+            <span class="text-amber-400 font-bold uppercase tracking-wider">Tampilan Sistem Keuangan (Sama Persis Production)</span>
+        </div>
+        <div class="flex items-center gap-2 overflow-x-auto text-xs py-0.5">
+            <a href="{{ route('mockup.login') }}" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200">1. Login</a>
+            <a href="{{ route('mockup.dashboard') }}" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200">2. Dashboard</a>
+            <a href="{{ route('mockup.properti') }}" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200">3. Properti</a>
+            <a href="{{ route('mockup.pemasukan') }}" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200">4. Pemasukan</a>
+            <a href="{{ route('mockup.pengeluaran') }}" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200">5. Pengeluaran</a>
+            <a href="{{ route('mockup.histori-transaksi') }}" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200">6. Histori</a>
+            <a href="{{ route('mockup.cetak-laporan') }}" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200">7. Laporan</a>
+        </div>
+    </div>
+    @endif
     <div class="flex h-screen">
 
         <!-- Sidebar -->
@@ -389,11 +410,6 @@
                         class="sidebar-link @if (request()->routeIs('agen.*')) active @endif flex items-center py-2.5 px-4 rounded text-white hover:text-brand">
                         <i class="fas fa-user-tie mr-3 w-5"></i>
                         <span>Agen Properti</span>
-                    </a>
-                    <a href="{{ route('admin.chatbot.index') }}"
-                        class="sidebar-link @if (request()->routeIs('admin.chatbot.*')) active @endif flex items-center py-2.5 px-4 rounded text-white hover:text-brand">
-                        <i class="fas fa-robot mr-3 w-5"></i>
-                        <span>Chatbot FAQ</span>
                     </a>
                 @endif
             </nav>
@@ -550,9 +566,6 @@
 
     <!-- Slot untuk script spesifik halaman (jika ada) -->
     @stack('scripts')
-
-    <!-- Chatbot Widget -->
-    <x-chatbot-widget />
 </body>
 
 </html>

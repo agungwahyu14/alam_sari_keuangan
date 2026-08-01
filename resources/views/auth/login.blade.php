@@ -168,10 +168,6 @@
             &copy; 2025 Alam Sari Properti. All rights reserved.
         </p>
     </div>
-
-    <!-- Chatbot Widget -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <x-chatbot-widget />
 </body>
 
 </html>

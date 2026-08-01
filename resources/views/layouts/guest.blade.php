@@ -29,9 +29,6 @@
             {{ $slot }}
         </div>
     </div>
-
-    <!-- Chatbot Widget -->
-    <x-chatbot-widget />
 </body>
 
 </html>

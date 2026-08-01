@@ -229,41 +229,90 @@
                         <!-- Income Fields -->
                         <div id="modal-income-fields">
                             <div class="mb-4">
-                                <label for="modal-service-id" class="block font-semibold mb-2">Layanan</label>
-                                <select name="service_id" id="modal-service-id" class="w-full border rounded px-3 py-2">
-                                    <option value="">Pilih Layanan</option>
+                                <label for="modal-income-category" class="block font-semibold mb-2">Kategori Pemasukan</label>
+                                <select name="income_category" id="modal-income-category" class="w-full border rounded px-3 py-2">
+                                    <option value="Penjualan Properti">Penjualan Properti (Pelunasan)</option>
+                                    <option value="Pembayaran Termin">Pembayaran Termin / Bertahap (Notaris)</option>
+                                    <option value="Biaya Notaris & Legalisasi">Biaya Legalisasi & Notaris</option>
+                                    <option value="DP Pembelian Properti">Uang Muka / DP Pembelian</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="modal-service-id" class="block font-semibold mb-2">Unit Properti / Layanan</label>
+                                <select name="service_id" id="modal-service-id" class="w-full border rounded px-3 py-2" onchange="calculateAgentCommission()">
+                                    <option value="">Pilih Properti / Layanan</option>
                                     @foreach ($services ?? [] as $service)
-                                        <option value="{{ $service->id }}">{{ $service->name }}</option>
+                                        <option value="{{ $service->id }}" data-price="{{ $service->price }}">{{ $service->name }} (Rp {{ number_format($service->price, 0, ',', '.') }})</option>
                                     @endforeach
+                                </select>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="modal-payment-method" class="block font-semibold mb-2">Metode Pembayaran</label>
+                                <select name="payment_method" id="modal-payment-method" class="w-full border rounded px-3 py-2">
+                                    <option value="Transfer Bank BCA">Transfer Bank BCA</option>
+                                    <option value="Transfer Bank Mandiri">Transfer Bank Mandiri</option>
+                                    <option value="Escrow Notaris">Escrow Notaris</option>
+                                    <option value="Tunai">Tunai / Cash</option>
                                 </select>
                             </div>
                             
                             <div class="mb-4">
-                                <label for="modal-user-id" class="block font-semibold mb-2">Karyawan</label>
+                                <label for="modal-notary-notes" class="block font-semibold mb-2">Catatan Notaris / No. Referensi</label>
+                                <input type="text" name="notary_notes" id="modal-notary-notes" class="w-full border rounded px-3 py-2" placeholder="Contoh: Akta Notaris Hendra No. 45/2026">
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="modal-user-id" class="block font-semibold mb-2">Karyawan / Agen Penanggung Jawab</label>
                                 @if (auth()->user()->role === 'admin')
                                     <select name="user_id" id="modal-user-id" class="w-full border rounded px-3 py-2">
-                                        <option value="">Pilih Karyawan</option>
+                                        <option value="">Pilih Karyawan / Agen</option>
                                         @foreach ($users ?? [] as $user)
-                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            <option value="{{ $user->id }}">{{ $user->name }} ({{ ucfirst($user->role) }})</option>
                                         @endforeach
                                     </select>
                                 @else
-                                    <!-- For employees, show their name as read-only and use hidden input -->
-                                    <input type="text" value="{{ auth()->user()->name }}"
-                                        class="w-full border rounded px-3 py-2 bg-gray-100" readonly>
+                                    <input type="text" value="{{ auth()->user()->name }}" class="w-full border rounded px-3 py-2 bg-gray-100" readonly>
                                     <input type="hidden" name="user_id" id="modal-user-id" value="{{ auth()->id() }}">
                                 @endif
                             </div>
-                            
                         </div>
                         
                         <!-- Expense Fields -->
                         <div id="modal-expense-fields" style="display:none;">
                             <div class="mb-4">
-                                <label for="modal-description" class="block font-semibold mb-2">Keterangan
-                                    Pengeluaran</label>
-                                <input type="text" name="description" id="modal-description"
-                                    class="w-full border rounded px-3 py-2">
+                                <label for="modal-expense-category" class="block font-semibold mb-2">Kategori Pengeluaran</label>
+                                <select name="expense_category" id="modal-expense-category" class="w-full border rounded px-3 py-2" onchange="toggleAgentCommissionSection(this.value)">
+                                    <option value="Komisi Perantara">Komisi Perantara / Agen Freelance (5%)</option>
+                                    <option value="Operasional Kantor">Operasional & Administrasi Kantor</option>
+                                    <option value="Biaya Legalitas Notaris">Biaya Legalitas & Notaris</option>
+                                    <option value="Perizinan & Pajak">Biaya Perizinan & Pajak Properti</option>
+                                </select>
+                            </div>
+
+                            <div id="agent-commission-panel" class="p-4 bg-green-50 border border-green-200 rounded-lg mb-4">
+                                <div class="font-bold text-green-800 text-sm mb-2"><i class="fas fa-percentage mr-1"></i> Perhitungan Komisi Agen Freelance (5%)</div>
+                                <div class="mb-3">
+                                    <label for="modal-agent-id" class="block font-semibold mb-1 text-xs">Pilih Agen Penerima Komisi</label>
+                                    <select name="agent_id" id="modal-agent-id" class="w-full border rounded px-3 py-2 text-sm bg-white" onchange="updateAgentBankInfo(this)">
+                                        <option value="">-- Pilih Agen Freelance --</option>
+                                        @foreach ($users ?? [] as $u)
+                                            @if($u->role === 'agen')
+                                                <option value="{{ $u->id }}" data-account="{{ $u->bank_account }}">{{ $u->name }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div id="agent-bank-info" class="text-xs bg-white p-2.5 rounded border border-green-200 text-gray-700">
+                                    <span class="font-semibold text-gray-900 block mb-0.5">Informasi Rekening Bank:</span>
+                                    <span id="bank-detail-text">Silakan pilih agen untuk menampilkan nomor rekening.</span>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="modal-description" class="block font-semibold mb-2">Keterangan / Deskripsi Pengeluaran</label>
+                                <input type="text" name="description" id="modal-description" class="w-full border rounded px-3 py-2" placeholder="Masukkan keterangan detail pengeluaran">
                             </div>
                         </div>
                     </form>
@@ -620,6 +669,36 @@
                     });
                 }
             });
+        }
+
+        // Helper wireframe agent commission & bank info
+        function updateAgentBankInfo(select) {
+            const selectedOption = select.options[select.selectedIndex];
+            const account = selectedOption.getAttribute('data-account') || '';
+            const name = selectedOption.text;
+            if (select.value) {
+                $('#bank-detail-text').html(`<strong>${account}</strong> a/n ${name}`);
+            } else {
+                $('#bank-detail-text').text('Silakan pilih agen untuk menampilkan nomor rekening.');
+            }
+        }
+
+        function calculateAgentCommission() {
+            const serviceSelect = document.getElementById('modal-service-id');
+            const selected = serviceSelect.options[serviceSelect.selectedIndex];
+            const price = parseFloat(selected.getAttribute('data-price')) || 0;
+            if (price > 0 && $('#modal-radio-expense').is(':checked')) {
+                const commission = price * 0.05;
+                $('#modal-amount').val(commission);
+            }
+        }
+
+        function toggleAgentCommissionSection(val) {
+            if (val === 'Komisi Perantara') {
+                $('#agent-commission-panel').show();
+            } else {
+                $('#agent-commission-panel').hide();
+            }
         }
 
         // --- Laravel Flash Message Toast ---

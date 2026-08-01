@@ -15,7 +15,7 @@ class TransactionSeeder extends Seeder
      */
     public function run(): void
     {
-        $employees = User::where('role', 'karyawan')->get();
+        $employees = User::whereIn('role', ['agen', 'karyawan'])->get();
         $services = Service::all();
 
         if ($employees->isEmpty() || $services->isEmpty()) {

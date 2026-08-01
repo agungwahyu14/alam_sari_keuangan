@@ -53,15 +53,19 @@ Route::middleware(['auth'])->group(function () {
         \Auth::logout();
         return redirect()->route('login');
     })->name('logout');
-
-    // Admin Chatbot FAQ Management - Admin only
-    Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
-        Route::resource('chatbot', App\Http\Controllers\Admin\ChatbotFaqController::class)
-            ->only(['index', 'store', 'update', 'destroy']);
-    });
 });
 
-// Chatbot API - Available for guests and authenticated users
-Route::post('/chatbot/send', [App\Http\Controllers\ChatbotController::class, 'sendMessage'])->name('chatbot.send');
+// Route Mockup Halaman Aplikasi (Untuk keperluan Skripsi)
+Route::prefix('mockup')->name('mockup.')->group(function () {
+    Route::get('/', [App\Http\Controllers\MockupController::class, 'index'])->name('index');
+    Route::get('/login', [App\Http\Controllers\MockupController::class, 'login'])->name('login');
+    Route::get('/dashboard', [App\Http\Controllers\MockupController::class, 'dashboard'])->name('dashboard');
+    Route::get('/properti', [App\Http\Controllers\MockupController::class, 'properti'])->name('properti');
+    Route::get('/pemasukan', [App\Http\Controllers\MockupController::class, 'pemasukan'])->name('pemasukan');
+    Route::get('/pengeluaran', [App\Http\Controllers\MockupController::class, 'pengeluaran'])->name('pengeluaran');
+    Route::get('/histori-transaksi', [App\Http\Controllers\MockupController::class, 'historiTransaksi'])->name('histori-transaksi');
+    Route::get('/cetak-laporan', [App\Http\Controllers\MockupController::class, 'cetakLaporan'])->name('cetak-laporan');
+});
 
 require __DIR__.'/auth.php';
+

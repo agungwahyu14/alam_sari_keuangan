@@ -134,7 +134,7 @@ class DashboardController extends Controller
         }
         
         // Employee count (only shown to admins)
-        $employeeCount = auth()->user()->role === 'admin' ? User::where('role', 'karyawan')->count() : 0;
+        $employeeCount = auth()->user()->role === 'admin' ? User::whereIn('role', ['agen', 'karyawan'])->count() : 0;
         
         // Total salary this month (35% of income)
         $totalSalaries = $currentMonthIncome * 0.35;
