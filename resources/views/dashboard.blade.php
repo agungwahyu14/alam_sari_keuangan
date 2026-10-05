@@ -70,6 +70,11 @@
             min-height: 120px;
             display: flex;
             align-items: center;
+            width: 100%;
+        }
+
+        .metric-card > div {
+            width: 100%;
         }
 
         .metric-card::before {
@@ -562,7 +567,7 @@
                 <!-- Total Income Card -->
                 <div class="metric-card income rounded-xl p-6 text-white card-hover"
                     style="background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%) !important; background-color: #22c55e !important;">
-                    <div class="flex items-center justify-between">
+                    <div class="flex items-center justify-between w-full">
                         <div>
                             <p class="text-sm opacity-90">Total Pemasukan</p>
                             <p class="text-3xl font-bold mb-1">{{ 'Rp ' . number_format($currentMonthIncome, 0, ',', '.') }}
@@ -577,7 +582,7 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="bg-white bg-opacity-20 p-3 rounded-lg">
+                        <div class="bg-white bg-opacity-20 p-3 rounded-lg flex-shrink-0">
                             <i class="fas fa-arrow-trend-up text-2xl"></i>
                         </div>
                     </div>
@@ -586,7 +591,7 @@
                 <!-- Total Expense Card -->
                 <div class="metric-card expense rounded-xl p-6 text-white card-hover"
                     style="background: linear-gradient(135deg, #f87171 0%, #ef4444 100%) !important; background-color: #ef4444 !important;">
-                    <div class="flex items-center justify-between">
+                    <div class="flex items-center justify-between w-full">
                         <div>
                             <p class="text-sm opacity-90">Total Pengeluaran</p>
                             <p class="text-3xl font-bold mb-1">
@@ -601,7 +606,7 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="bg-white bg-opacity-20 p-3 rounded-lg">
+                        <div class="bg-white bg-opacity-20 p-3 rounded-lg flex-shrink-0">
                             <i class="fas fa-arrow-trend-down text-2xl"></i>
                         </div>
                     </div>
@@ -610,7 +615,7 @@
                 <!-- Net Profit Card -->
                 <div class="metric-card profit rounded-xl p-6 text-white card-hover"
                     style="background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%) !important; background-color: #3b82f6 !important;">
-                    <div class="flex items-center justify-between">
+                    <div class="flex items-center justify-between w-full">
                         <div>
                             <p class="text-sm opacity-90">Laba Bersih</p>
                             <p class="text-3xl font-bold mb-1">{{ 'Rp ' . number_format($netProfit, 0, ',', '.') }}</p>
@@ -624,7 +629,7 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="bg-white bg-opacity-20 p-3 rounded-lg">
+                        <div class="bg-white bg-opacity-20 p-3 rounded-lg flex-shrink-0">
                             <i class="fas fa-chart-line text-2xl"></i>
                         </div>
                     </div>
@@ -634,7 +639,7 @@
                 @if (auth()->user()->role === 'admin')
                     <div class="metric-card employees rounded-xl p-6 text-white card-hover"
                         style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important; background-color: #f59e0b !important;">
-                        <div class="flex items-center justify-between">
+                        <div class="flex items-center justify-between w-full">
                             <div class="flex-1">
                                 <p class="text-sm opacity-90">Total Karyawan</p>
                                 <p class="text-3xl font-bold mb-1">{{ $employeeCount }}</p>
