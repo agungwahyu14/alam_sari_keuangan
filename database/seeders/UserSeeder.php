@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
 
 class UserSeeder extends Seeder
 {
@@ -90,6 +90,6 @@ class UserSeeder extends Seeder
         $this->command->info('✅ Users seeded successfully!');
         $this->command->info('👤 Admin: admin@alamsari.com / admin123');
         $this->command->info('👥 Property Agents (Commission 5%): [name]@alamsari.com / agen123');
-        $this->command->info('📊 Total: 1 admin + ' . count($agents) . ' freelance agents');
+        $this->command->info('📊 Total: 1 admin + '.count($agents).' freelance agents');
     }
 }

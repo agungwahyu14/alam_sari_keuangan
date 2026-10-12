@@ -95,10 +95,10 @@ class DashboardController extends Controller
                 }
             });
         $topServices = $topServicesQuery
-            ->selectRaw('services.*, 
+            ->selectRaw('services.id, services.name, 
                         COALESCE(SUM(transactions.amount), 0) as total_amount, 
                         COALESCE(COUNT(transactions.id), 0) as transactions_count')
-            ->groupBy('services.id', 'services.name', 'services.price', 'services.created_at', 'services.updated_at')
+            ->groupBy('services.id', 'services.name')
             ->orderByDesc('total_amount')
             ->limit(5)
             ->get();
