@@ -562,8 +562,7 @@
             </div>
 
             <!-- KPI Cards -->
-            <div
-                class="grid grid-cols-1 md:grid-cols-2 {{ auth()->user()->role === 'admin' ? 'xl:grid-cols-4' : 'xl:grid-cols-3' }} gap-6 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <!-- Total Income Card -->
                 <div class="metric-card income rounded-xl p-6 text-white card-hover"
                     style="background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%) !important; background-color: #22c55e !important;">
