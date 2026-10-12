@@ -112,30 +112,32 @@
 
 @section('content')
     <div class="container mx-auto py-8 fade-in-up">
-        <div class="flex items-center justify-between mb-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
             <h1 class="text-2xl font-bold">Manajemen Transaksi</h1>
-            <button id="add-transaction-btn" class="btn-cta">Tambah Transaksi</button>
+            <button id="add-transaction-btn" class="btn-cta w-full sm:w-auto">Tambah Transaksi</button>
         </div>
 
         <!-- Filter Section -->
         <div class="bg-white rounded-lg shadow-lg p-4 mb-6" style="box-shadow: 0 4px 24px rgba(34,197,94,0.08);">
-            <div class="flex items-center gap-4">
-                <div class="flex items-center gap-2">
-                    <label for="month-filter" class="font-semibold text-gray-700">Filter Bulan:</label>
+            <div class="flex flex-wrap items-center gap-3">
+                <div class="flex items-center gap-2 w-full sm:w-auto">
+                    <label for="month-filter" class="font-semibold text-gray-700 whitespace-nowrap text-sm">Filter Bulan:</label>
                     <input type="month" id="month-filter"
-                        class="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                        class="border border-gray-300 rounded px-3 py-2 flex-1 sm:flex-none focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm"
                         value="{{ date('Y-m') }}">
                 </div>
-                <button id="filter-btn" class="btn-cta px-4 py-2">
-                    <i class="fas fa-filter mr-2"></i>Filter
-                </button>
-                <button id="clear-filter-btn" class="btn-secondary px-4 py-2">
-                    <i class="fas fa-times mr-2"></i>Hapus Filter
-                </button>
+                <div class="flex items-center gap-2 w-full sm:w-auto">
+                    <button id="filter-btn" class="btn-cta px-4 py-2 flex-1 sm:flex-none">
+                        <i class="fas fa-filter mr-2"></i>Filter
+                    </button>
+                    <button id="clear-filter-btn" class="btn-secondary px-4 py-2 flex-1 sm:flex-none">
+                        <i class="fas fa-times mr-2"></i>Hapus Filter
+                    </button>
+                </div>
             </div>
         </div>
 
-        <div class="bg-white rounded-lg shadow-lg p-6" style="box-shadow: 0 4px 24px rgba(34,197,94,0.08);">
+        <div class="bg-white rounded-lg shadow-lg p-4 sm:p-6" style="box-shadow: 0 4px 24px rgba(34,197,94,0.08);">
             <div class="overflow-x-auto">
                 <table id="transactions-table" class="min-w-full table-auto border">
                     <thead class="bg-gray-100">
@@ -158,7 +160,7 @@
         </div>
 
         <!-- Modal Structure -->
-        <div id="transaction-modal" class="fixed inset-0 z-50 hidden overflow-y-auto" aria-labelledby="modal-title"
+        <div id="transaction-modal" class="fixed inset-0 z-[99999] hidden overflow-y-auto" aria-labelledby="modal-title"
             role="dialog" aria-modal="true">
             <!-- Backdrop -->
             <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">

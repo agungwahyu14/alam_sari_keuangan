@@ -190,52 +190,204 @@
             justify-content: center;
         }
 
-        /* DataTables custom styling */
+        /* Modern & Interactive DataTables Styling */
+        .dataTables_wrapper {
+            position: relative;
+            clear: both;
+            font-family: inherit;
+        }
+
         .dataTables_wrapper .dataTables_length,
-        .dataTables_wrapper .dataTables_filter,
-        .dataTables_wrapper .dataTables_info,
-        .dataTables_wrapper .dataTables_paginate {
-            margin: 1rem 0;
+        .dataTables_wrapper .dataTables_filter {
+            margin-bottom: 1.25rem;
+            color: #475569;
+            font-size: 0.875rem;
+            font-weight: 500;
         }
 
-        .dataTables_wrapper .dataTables_length select,
+        .dataTables_wrapper .dataTables_length select {
+            border: 1.5px solid #e2e8f0 !important;
+            border-radius: 0.5rem !important;
+            padding: 0.4rem 2rem 0.4rem 0.75rem !important;
+            margin: 0 0.5rem !important;
+            background-color: #ffffff !important;
+            color: #1e293b !important;
+            font-size: 0.875rem !important;
+            outline: none !important;
+            transition: all 0.2s ease !important;
+            cursor: pointer !important;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+        }
+
+        .dataTables_wrapper .dataTables_length select:focus {
+            border-color: #22c55e !important;
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15) !important;
+        }
+
         .dataTables_wrapper .dataTables_filter input {
-            border: 1px solid #d1d5db;
-            border-radius: 0.375rem;
-            padding: 0.5rem;
-            margin: 0 0.5rem;
+            border: 1.5px solid #e2e8f0 !important;
+            border-radius: 0.5rem !important;
+            padding: 0.45rem 0.85rem !important;
+            margin-left: 0.5rem !important;
+            background-color: #ffffff !important;
+            color: #1e293b !important;
+            font-size: 0.875rem !important;
+            outline: none !important;
+            transition: all 0.2s ease !important;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+            min-width: 220px !important;
         }
 
-        .dataTables_wrapper .dataTables_paginate .paginate_button {
-            border: 1px solid #d1d5db;
-            border-radius: 0.375rem;
-            padding: 0.5rem 0.75rem;
-            margin: 0 0.25rem;
-            background: white;
-            color: #374151;
-            text-decoration: none;
+        .dataTables_wrapper .dataTables_filter input:focus {
+            border-color: #22c55e !important;
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15) !important;
         }
 
-        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-            background: #f3f4f6;
-            border-color: #9ca3af;
+        .dataTables_wrapper table.dataTable {
+            width: 100% !important;
+            margin: 0.75rem 0 1.25rem 0 !important;
+            border-collapse: separate !important;
+            border-spacing: 0 !important;
+            border: none !important;
+            border-radius: 0.75rem !important;
+            overflow: hidden !important;
+            box-shadow: none !important;
         }
 
-        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
-            background: var(--brand-yellow);
-            border-color: var(--brand-yellow);
-            color: white;
+        .dataTables_wrapper table.dataTable thead {
+            background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%) !important;
         }
 
         .dataTables_wrapper table.dataTable thead th {
-            border-bottom: 2px solid #e5e7eb;
-            background: #f9fafb;
-            font-weight: 600;
-            color: var(--charcoal-gray);
+            padding: 0.875rem 1rem !important;
+            font-size: 0.75rem !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.05em !important;
+            text-transform: uppercase !important;
+            color: #475569 !important;
+            border-bottom: 1.5px solid #e2e8f0 !important;
+            border-top: none !important;
+            border-left: none !important;
+            border-right: none !important;
+            position: relative !important;
+            user-select: none !important;
+            transition: background-color 0.2s ease, color 0.2s ease !important;
+        }
+
+        .dataTables_wrapper table.dataTable thead th:hover {
+            color: #0f172a !important;
+            background-color: #e2e8f0 !important;
+        }
+
+        .dataTables_wrapper table.dataTable tbody td {
+            padding: 0.875rem 1rem !important;
+            color: #334155 !important;
+            font-size: 0.875rem !important;
+            border-bottom: 1px solid #f1f5f9 !important;
+            border-left: none !important;
+            border-right: none !important;
+            vertical-align: middle !important;
+            transition: background-color 0.15s ease !important;
+        }
+
+        .dataTables_wrapper table.dataTable tbody tr {
+            background-color: #ffffff !important;
+            transition: background-color 0.15s ease, transform 0.15s ease !important;
+        }
+
+        .dataTables_wrapper table.dataTable tbody tr:nth-child(even) {
+            background-color: #fafbfd !important;
         }
 
         .dataTables_wrapper table.dataTable tbody tr:hover {
-            background-color: #f0fdf4;
+            background-color: #ecfdf5 !important;
+        }
+
+        .dataTables_wrapper table.dataTable tbody tr:last-child td {
+            border-bottom: none !important;
+        }
+
+        .dataTables_wrapper .dataTables_info {
+            padding-top: 0.85rem !important;
+            font-size: 0.8125rem !important;
+            color: #64748b !important;
+            font-weight: 500 !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate {
+            padding-top: 0.65rem !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 0.25rem !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            border: 1px solid #e2e8f0 !important;
+            border-radius: 0.5rem !important;
+            padding: 0.35rem 0.75rem !important;
+            font-size: 0.8125rem !important;
+            font-weight: 600 !important;
+            color: #475569 !important;
+            background: #ffffff !important;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            cursor: pointer !important;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+            margin: 0 0.15rem !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: #f8fafc !important;
+            color: #0f172a !important;
+            border-color: #cbd5e1 !important;
+            transform: translateY(-1px) !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06) !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+            transform: translateY(0) !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%) !important;
+            border-color: #16a34a !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 10px rgba(34, 197, 94, 0.3) !important;
+            font-weight: 700 !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.disabled,
+        .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover {
+            opacity: 0.45 !important;
+            cursor: not-allowed !important;
+            transform: none !important;
+            border-color: #e2e8f0 !important;
+            background: #ffffff !important;
+            color: #94a3b8 !important;
+            box-shadow: none !important;
+        }
+
+        @media (max-width: 640px) {
+            .dataTables_wrapper .dataTables_length,
+            .dataTables_wrapper .dataTables_filter {
+                float: none !important;
+                text-align: left !important;
+                margin-bottom: 0.75rem !important;
+            }
+
+            .dataTables_wrapper .dataTables_filter input {
+                width: 100% !important;
+                margin-left: 0 !important;
+                margin-top: 0.25rem !important;
+            }
+
+            .dataTables_wrapper .dataTables_info,
+            .dataTables_wrapper .dataTables_paginate {
+                float: none !important;
+                text-align: center !important;
+                justify-content: center !important;
+                margin-top: 0.5rem !important;
+            }
         }
 
         /* Additional layout fixes for scrolling */
@@ -310,6 +462,72 @@
             z-index: 100;
         }
 
+        /* Ensure modals appear above header and dropdowns */
+        #transaction-modal,
+        #service-modal,
+        #employee-modal,
+        #createModal,
+        #editModal,
+        [role="dialog"] {
+            z-index: 99999 !important;
+        }
+
+        /* Modal Keyframe Animations */
+        @keyframes modalBackdropFadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes modalPanelPopIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.92) translateY(16px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        /* Backdrop smooth animation with blur */
+        [role="dialog"]:not(.hidden) .fixed.inset-0.bg-gray-900,
+        #transaction-modal:not(.hidden) .bg-gray-900,
+        #service-modal:not(.hidden) .bg-gray-900,
+        #employee-modal:not(.hidden) .bg-gray-900,
+        #createModal:not(.hidden) .bg-gray-900,
+        #editModal:not(.hidden) .bg-gray-900 {
+            animation: modalBackdropFadeIn 0.25s ease-out forwards;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        /* Modal Panel smooth pop-in animation */
+        [role="dialog"]:not(.hidden) .shadow-xl,
+        #transaction-modal:not(.hidden) .shadow-xl,
+        #service-modal:not(.hidden) .shadow-xl,
+        #employee-modal:not(.hidden) .shadow-xl,
+        #createModal:not(.hidden) .shadow-xl,
+        #editModal:not(.hidden) .shadow-xl {
+            animation: modalPanelPopIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+            will-change: transform, opacity;
+        }
+
+        /* Modal Close Button interactive animation */
+        [role="dialog"] button[onclick*="closeModal"],
+        [role="dialog"] button[onclick*="close"] {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+
+        [role="dialog"] button[onclick*="closeModal"]:hover,
+        [role="dialog"] button[onclick*="close"]:hover {
+            transform: rotate(90deg) scale(1.15);
+            color: #ef4444 !important;
+        }
+
         /* Profile dropdown button container */
         .relative {
             position: relative;
@@ -372,9 +590,12 @@
     @endif
     <div class="flex h-screen">
 
+        <!-- Mobile Sidebar Backdrop -->
+        <div id="sidebar-backdrop" class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm z-40 hidden md:hidden transition-opacity"></div>
+
         <!-- Sidebar -->
         <aside id="sidebar"
-            class="sidebar-bg text-white w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition-all duration-300 ease-in-out z-50">
+            class="sidebar-bg text-white w-64 space-y-6 py-7 px-2 fixed inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition-all duration-300 ease-in-out z-50">
             <div class="flex justify-between items-center px-4">
                 <a href="{{ route('dashboard') }}" id="sidebar-logo"
                     class="logo-container text-white flex items-center space-x-2">
@@ -419,7 +640,7 @@
 
             <!-- Header -->
             <header class="bg-white shadow-sm border-b border-gray-200">
-                <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+                <div class="w-full py-4 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
                     <!-- Mobile Menu Toggle -->
                     <button id="menu-toggle" class="md:hidden text-primary hover:opacity-75 focus:outline-none">
                         <i class="fas fa-bars text-xl"></i>
@@ -458,7 +679,7 @@
             </header>
 
             <!-- Konten Dinamis Akan Dimuat Di Sini -->
-            <main class="flex-1 overflow-x-hidden overflow-y-auto p-6 fade-in-up"
+            <main class="flex-1 overflow-x-hidden overflow-y-auto p-4 sm:p-6 fade-in-up"
                 style="scroll-behavior: smooth; -webkit-overflow-scrolling: touch;">
                 @yield('content')
             </main>
@@ -474,13 +695,25 @@
 
     <!-- Script untuk Sidebar dan Dropdown (Global) -->
     <script>
-        // Mobile sidebar toggle
+        // Mobile sidebar toggle with backdrop
         const menuToggle = document.getElementById('menu-toggle');
         const sidebar = document.getElementById('sidebar');
-        if (menuToggle && sidebar) {
-            menuToggle.addEventListener('click', () => {
+        const sidebarBackdrop = document.getElementById('sidebar-backdrop');
+
+        function toggleSidebar() {
+            if (sidebar) {
                 sidebar.classList.toggle('-translate-x-full');
-            });
+                if (sidebarBackdrop) {
+                    sidebarBackdrop.classList.toggle('hidden');
+                }
+            }
+        }
+
+        if (menuToggle) {
+            menuToggle.addEventListener('click', toggleSidebar);
+        }
+        if (sidebarBackdrop) {
+            sidebarBackdrop.addEventListener('click', toggleSidebar);
         }
 
         // Enhanced dropdown functionality
@@ -543,6 +776,11 @@
                 dropdown.style.top = '100%';
                 dropdown.style.marginTop = '0.5rem';
             }
+
+            // Move modals directly to body so they are not trapped inside <main> and covered by header
+            document.querySelectorAll('#transaction-modal, #service-modal, #employee-modal, [role="dialog"]').forEach(function(modal) {
+                document.body.appendChild(modal);
+            });
         });
 
         // SweetAlert logout confirmation

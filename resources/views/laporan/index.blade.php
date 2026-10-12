@@ -145,6 +145,8 @@
             text-decoration: none;
             display: inline-flex;
             align-items: center;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .tab-button.active {
@@ -157,12 +159,10 @@
             text-decoration: none;
         }
 
-        /* Table Styles */
         .table-container {
-            background: white;
-            border-radius: 0.5rem;
-            overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            background: transparent;
+            border: none;
+            box-shadow: none;
         }
 
         .table-container table {
@@ -282,18 +282,18 @@
         <!-- Date Range Filter -->
         <div class="report-card">
             <h3 class="text-lg font-semibold mb-4">Filter Periode</h3>
-            <div class="flex gap-4 items-end">
-                <div>
+            <div class="flex flex-col sm:flex-row sm:items-end gap-4">
+                <div class="w-full sm:w-auto">
                     <label for="start-date" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Mulai</label>
-                    <input type="date" id="start-date" class="border border-gray-300 rounded px-3 py-2"
+                    <input type="date" id="start-date" class="w-full sm:w-auto border border-gray-300 rounded px-3 py-2 text-sm"
                         value="{{ date('Y-m-01') }}">
                 </div>
-                <div>
+                <div class="w-full sm:w-auto">
                     <label for="end-date" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Akhir</label>
-                    <input type="date" id="end-date" class="border border-gray-300 rounded px-3 py-2"
+                    <input type="date" id="end-date" class="w-full sm:w-auto border border-gray-300 rounded px-3 py-2 text-sm"
                         value="{{ date('Y-m-t') }}">
                 </div>
-                <button onclick="updateAllReports()" class="btn-cta">
+                <button onclick="updateAllReports()" class="btn-cta w-full sm:w-auto">
                     <i class="fas fa-refresh mr-2"></i>Update Laporan
                 </button>
             </div>
@@ -302,7 +302,7 @@
         <!-- Report Tabs -->
         <div class="report-card">
             <div class="border-b border-gray-200 mb-4">
-                <nav class="-mb-px flex">
+                <nav class="-mb-px flex overflow-x-auto pb-2 space-x-1 sm:space-x-2">
                     @if (auth()->user()->role !== 'agen')
                         <button class="tab-button active" onclick="switchTab('cashflow')" id="tab-cashflow">
                             <i class="fas fa-chart-line mr-2"></i>Arus Kas
@@ -332,9 +332,9 @@
             <!-- Cash Flow Tab -->
             @if (auth()->user()->role !== 'agen')
                 <div id="cashflow-content" class="tab-content active">
-                    <div class="flex justify-between items-center mb-4">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
                         <h3 class="text-xl font-semibold">Laporan Arus Kas</h3>
-                        <button onclick="downloadPDF('cash-flow')" class="btn-download">
+                        <button onclick="downloadPDF('cash-flow')" class="btn-download w-full sm:w-auto">
                             <i class="fas fa-download mr-2"></i>Download PDF
                         </button>
                     </div>
@@ -363,7 +363,7 @@
                         </p>
                     </div>
 
-                    <div class="overflow-x-auto table-container">
+                    <div class="overflow-x-auto">
                         <table id="cashflow-table" class="min-w-full">
                             <thead>
                                 <tr>
@@ -394,9 +394,9 @@
             <!-- Profit Loss Tab -->
             @if (auth()->user()->role !== 'agen')
                 <div id="profitloss-content" class="tab-content">
-                    <div class="flex justify-between items-center mb-4">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
                         <h3 class="text-xl font-semibold">Laporan Laba Rugi</h3>
-                        <button onclick="downloadPDF('profit-loss')" class="btn-download">
+                        <button onclick="downloadPDF('profit-loss')" class="btn-download w-full sm:w-auto">
                             <i class="fas fa-download mr-2"></i>Download PDF
                         </button>
                     </div>
@@ -469,7 +469,7 @@
                         </div>
                     </div>
 
-                    <div class="overflow-x-auto table-container">
+                    <div class="overflow-x-auto">
                         <table id="service-table" class="min-w-full">
                             <thead>
                                 <tr>
@@ -513,7 +513,7 @@
                         </div>
                     </div>
 
-                    <div class="overflow-x-auto table-container">
+                    <div class="overflow-x-auto">
                         <table id="transaction-report-table" class="min-w-full">
                             <thead>
                                 <tr>
@@ -558,7 +558,7 @@
                         </div>
                     </div>
 
-                    <div class="overflow-x-auto table-container">
+                    <div class="overflow-x-auto">
                         <table id="commission-table" class="min-w-full">
                             <thead>
                                 <tr>
@@ -604,7 +604,7 @@
                         </div>
                     </div>
 
-                    <div class="overflow-x-auto table-container">
+                    <div class="overflow-x-auto">
                         <table id="commission-table" class="min-w-full">
                             <thead>
                                 <tr>

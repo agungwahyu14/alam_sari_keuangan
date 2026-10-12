@@ -57,13 +57,13 @@
 @endpush
 
 @section('content')
-<div class="container mx-auto py-8 fade-in-up">
-	<div class="flex items-center justify-between mb-6">
+<div class="container mx-auto py-4 sm:py-8 fade-in-up">
+	<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
 		<h1 class="text-2xl font-bold">Kelola Chatbot FAQ</h1>
-		<button id="add-faq-btn" class="btn-cta" onclick="openModal('createModal')">Tambah FAQ</button>
+		<button id="add-faq-btn" class="btn-cta w-full sm:w-auto" onclick="openModal('createModal')">Tambah FAQ</button>
 	</div>
 
-	<div class="bg-white rounded-lg shadow-lg p-6" style="box-shadow: 0 4px 24px rgba(34,197,94,0.08);">
+	<div class="bg-white rounded-lg shadow-lg p-4 sm:p-6" style="box-shadow: 0 4px 24px rgba(34,197,94,0.08);">
             <div class="overflow-x-auto">
                 <table class="min-w-full table-auto border">
                     <thead class="bg-gray-100">

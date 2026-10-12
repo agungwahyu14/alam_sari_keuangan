@@ -3,11 +3,11 @@
 @section('title', 'Manajemen Transaksi')
 
 @section('content')
-<div class="container mx-auto py-8">
+<div class="container mx-auto py-4 sm:py-8">
 	<h1 class="text-2xl font-bold mb-6">Manajemen Transaksi</h1>
 	<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 		<!-- Left Column: Form -->
-		<div class="bg-white rounded-lg shadow p-6">
+		<div class="bg-white rounded-lg shadow p-4 sm:p-6">
 			<form method="POST" action="{{ route('transaksi.store') }}" id="add-transaction-form">
 				@csrf
 				<div class="mb-4">

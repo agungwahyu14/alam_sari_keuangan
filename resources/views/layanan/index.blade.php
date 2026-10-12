@@ -89,15 +89,15 @@
 
 @section('content')
 <div class="container mx-auto py-8 fade-in-up">
-	<div class="flex items-center justify-between mb-6">
+	<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
 		<h1 class="text-2xl font-bold">Kelola Properti</h1>
 		@if(auth()->user()->role === 'admin')
-			<button onclick="openModal('create')" class="btn-cta">
+			<button onclick="openModal('create')" class="btn-cta w-full sm:w-auto">
 				<i class="fas fa-plus mr-2"></i> Tambah Properti
 			</button>
 		@endif
 	</div>
-	<div class="bg-white rounded-lg shadow-lg p-6" style="box-shadow: 0 4px 24px rgba(34,197,94,0.08);">
+	<div class="bg-white rounded-lg shadow-lg p-4 sm:p-6" style="box-shadow: 0 4px 24px rgba(34,197,94,0.08);">
 		<div class="overflow-x-auto">
 			<table id="services-table" class="min-w-full table-auto border">
 				<thead class="bg-gray-100">
@@ -119,7 +119,7 @@
 </div>
 
 <!-- Modal Tambah/Edit Layanan -->
-<div id="service-modal" class="fixed inset-0 z-50 hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+<div id="service-modal" class="fixed inset-0 z-[99999] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
 	<!-- Backdrop -->
 	<div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
 		<!-- Backdrop Element -->

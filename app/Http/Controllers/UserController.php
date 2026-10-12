@@ -58,7 +58,8 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8',
-            'bank_account' => 'nullable|string|max:255'
+            'bank_account' => 'nullable|string|max:255',
+            'email_verified_at' => 'nullable|date',
         ]);
         
         // Create new user
@@ -66,8 +67,9 @@ class UserController extends Controller
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
-            'role' => 'karyawan',
-            'bank_account' => $validated['bank_account'] ?? null
+            'role' => 'agen',
+            'bank_account' => $validated['bank_account'] ?? null,
+            'email_verified_at' => $validated['email_verified_at'] ?? null,
         ]);
         
         return response()->json([
@@ -79,15 +81,15 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $karyawan)
+    public function show(User $agen)
     {
-        return response()->json($karyawan);
+        return response()->json($agen);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $karyawan)
+    public function edit(User $agen)
     {
         //
     }
@@ -95,7 +97,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $karyawan)
+    public function update(Request $request, User $agen)
     {
         // Prevent employees from updating users
         if (auth()->user()->role === 'agen') {
@@ -108,17 +110,19 @@ class UserController extends Controller
             'email' => [
                 'required',
                 'email',
-                Rule::unique('users', 'email')->ignore($karyawan->id)
+                Rule::unique('users', 'email')->ignore($agen->id)
             ],
             'password' => 'nullable|string|min:8',
-            'bank_account' => 'nullable|string|max:255'
+            'bank_account' => 'nullable|string|max:255',
+            'email_verified_at' => 'nullable|date',
         ]);
         
         // Update user data
         $updateData = [
             'name' => $validated['name'],
             'email' => $validated['email'],
-            'bank_account' => $validated['bank_account'] ?? null
+            'bank_account' => $validated['bank_account'] ?? null,
+            'email_verified_at' => $validated['email_verified_at'] ?? null,
         ];
         
         // If password is provided, hash and include it
@@ -126,7 +130,7 @@ class UserController extends Controller
             $updateData['password'] = Hash::make($validated['password']);
         }
         
-        $karyawan->update($updateData);
+        $agen->update($updateData);
         
         return response()->json([
             'success' => true,
@@ -137,14 +141,14 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $karyawan)
+    public function destroy(User $agen)
     {
         // Prevent employees from deleting users
         if (auth()->user()->role === 'agen') {
             return response()->json(['error' => 'Karyawan tidak diizinkan menghapus agen.'], 403);
         }
         
-        $karyawan->delete();
+        $agen->delete();
         
         return response()->json([
             'success' => true,

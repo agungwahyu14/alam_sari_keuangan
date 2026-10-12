@@ -487,12 +487,12 @@
 
 @section('content')
     <div class="main-content">
-        <div class="container mx-auto py-8 fade-in-up">
+        <div class="container mx-auto py-4 sm:py-8 fade-in-up">
             <!-- Welcome Section -->
             <div class="mb-8">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between">
                     <div>
-                        <h1 class="text-4xl font-bold text-gray-800 mb-2">
+                        <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-2">
                             Dashboard Analitik Keuangan
                             <span class="live-indicator inline-flex items-center ml-3">
                                 <span class="w-3 h-3 bg-green-500 rounded-full mr-2"></span>
@@ -564,12 +564,12 @@
             <!-- KPI Cards -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <!-- Total Income Card -->
-                <div class="metric-card income rounded-xl p-6 text-white card-hover"
+                <div class="metric-card income rounded-xl p-4 sm:p-6 text-white card-hover"
                     style="background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%) !important; background-color: #22c55e !important;">
                     <div class="flex items-center justify-between w-full">
                         <div>
                             <p class="text-sm opacity-90">Total Pemasukan</p>
-                            <p class="text-3xl font-bold mb-1">{{ 'Rp ' . number_format($currentMonthIncome, 0, ',', '.') }}
+                            <p class="text-2xl sm:text-3xl font-bold mb-1">{{ 'Rp ' . number_format($currentMonthIncome, 0, ',', '.') }}
                             </p>
                             <div class="flex items-center text-sm">
                                 @if ($incomeChange == 0 && $currentMonthIncome == 0)
@@ -588,12 +588,12 @@
                 </div>
 
                 <!-- Total Expense Card -->
-                <div class="metric-card expense rounded-xl p-6 text-white card-hover"
+                <div class="metric-card expense rounded-xl p-4 sm:p-6 text-white card-hover"
                     style="background: linear-gradient(135deg, #f87171 0%, #ef4444 100%) !important; background-color: #ef4444 !important;">
                     <div class="flex items-center justify-between w-full">
                         <div>
                             <p class="text-sm opacity-90">Total Pengeluaran</p>
-                            <p class="text-3xl font-bold mb-1">
+                            <p class="text-2xl sm:text-3xl font-bold mb-1">
                                 {{ 'Rp ' . number_format($currentMonthExpense, 0, ',', '.') }}</p>
                             <div class="flex items-center text-sm">
                                 @if ($expenseChange == 0 && $currentMonthExpense == 0)
@@ -612,12 +612,12 @@
                 </div>
 
                 <!-- Net Profit Card -->
-                <div class="metric-card profit rounded-xl p-6 text-white card-hover"
+                <div class="metric-card profit rounded-xl p-4 sm:p-6 text-white card-hover"
                     style="background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%) !important; background-color: #3b82f6 !important;">
                     <div class="flex items-center justify-between w-full">
                         <div>
                             <p class="text-sm opacity-90">Laba Bersih</p>
-                            <p class="text-3xl font-bold mb-1">{{ 'Rp ' . number_format($netProfit, 0, ',', '.') }}</p>
+                            <p class="text-2xl sm:text-3xl font-bold mb-1">{{ 'Rp ' . number_format($netProfit, 0, ',', '.') }}</p>
                             <div class="flex items-center text-sm">
                                 @if ($profitChange == 0 && $netProfit == 0)
                                     <i class="fas fa-minus mr-1"></i>
@@ -636,12 +636,12 @@
 
                 <!-- Employee Count Card - Only visible to admins -->
                 @if (auth()->user()->role === 'admin')
-                    <div class="metric-card employees rounded-xl p-6 text-white card-hover"
+                    <div class="metric-card employees rounded-xl p-4 sm:p-6 text-white card-hover"
                         style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important; background-color: #f59e0b !important;">
                         <div class="flex items-center justify-between w-full">
                             <div class="flex-1">
                                 <p class="text-sm opacity-90">Total Karyawan</p>
-                                <p class="text-3xl font-bold mb-1">{{ $employeeCount }}</p>
+                                <p class="text-2xl sm:text-3xl font-bold mb-1">{{ $employeeCount }}</p>
                                 <div class="flex items-center text-sm">
                                     <i class="fas fa-users mr-1"></i>
                                     <span>Gaji: Rp {{ number_format($totalSalaries, 0, ',', '.') }}</span>
@@ -797,7 +797,7 @@
                     </div>
 
                     <!-- Chart insights -->
-                    <div class="mt-4 grid grid-cols-3 gap-4 pt-4 border-t border-gray-200">
+                    <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-gray-200">
                         <div class="text-center">
                             <p class="text-xs text-gray-500">Rata-rata Pendapatan</p>
                             <p class="font-semibold text-green-600">
@@ -833,27 +833,25 @@
                         @forelse($topServices as $index => $service)
                             <div
                                 class="flex items-center justify-between p-3 bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg hover:from-green-50 hover:to-green-100 transition-all">
-                                <div class="flex items-center space-x-3">
+                                <div class="flex items-center space-x-3 min-w-0 flex-1">
                                     <div class="flex-shrink-0">
                                         <div
                                             class="w-8 h-8 rounded-full bg-gradient-to-r {{ $index == 0 ? 'from-yellow-400 to-yellow-600' : ($index == 1 ? 'from-gray-300 to-gray-500' : 'from-orange-400 to-orange-600') }} flex items-center justify-center">
                                             <span class="text-white text-xs font-bold">{{ $index + 1 }}</span>
                                         </div>
                                     </div>
-                                    <div class="flex-1">
-                                        <p class="font-medium text-gray-800">{{ $service->name }}</p>
-                                        <div class="flex items-center space-x-2 text-xs text-gray-600">
-                                            <span>{{ $service->transactions_count }} transaksi</span>
+                                    <div class="min-w-0 flex-1">
+                                        <p class="font-medium text-gray-800 text-sm truncate" title="{{ $service->name }}">{{ $service->name }}</p>
+                                        <div class="flex flex-wrap items-center gap-x-1.5 text-xs text-gray-500">
+                                            <span class="whitespace-nowrap">{{ $service->transactions_count }} transaksi</span>
                                             <span>•</span>
-                                            <span>Avg: Rp
-                                                {{ number_format($service->transactions_count > 0 ? $service->total_amount / $service->transactions_count : 0, 0, ',', '.') }}</span>
+                                            <span class="whitespace-nowrap">Avg: Rp {{ number_format($service->transactions_count > 0 ? $service->total_amount / $service->transactions_count : 0, 0, ',', '.') }}</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="text-right">
-                                    <p class="font-bold text-green-600">Rp
-                                        {{ number_format($service->total_amount, 0, ',', '.') }}</p>
-                                    <div class="w-16 bg-gray-200 rounded-full h-2 mt-1">
+                                <div class="text-right flex-shrink-0 ml-3">
+                                    <p class="font-bold text-green-600 text-sm whitespace-nowrap">Rp {{ number_format($service->total_amount, 0, ',', '.') }}</p>
+                                    <div class="flex items-center justify-end space-x-1.5 mt-1">
                                         @php
                                             $maxAmount = $topServices->max('total_amount');
                                             $progressWidth =
@@ -861,13 +859,14 @@
                                                     ? min(100, ($service->total_amount / $maxAmount) * 100)
                                                     : 0;
                                         @endphp
-                                        <div class="bg-gradient-to-r from-green-400 to-green-600 h-2 rounded-full transition-all duration-1000"
-                                            style="width: {{ $progressWidth }}%"></div>
+                                        <div class="w-12 bg-gray-200 rounded-full h-1.5 overflow-hidden">
+                                            <div class="bg-gradient-to-r from-green-400 to-green-600 h-1.5 rounded-full transition-all duration-1000"
+                                                style="width: {{ $progressWidth }}%"></div>
+                                        </div>
+                                        <span class="text-xs text-gray-500 whitespace-nowrap">
+                                            {{ $topServices->sum('total_amount') > 0 ? number_format(($service->total_amount / $topServices->sum('total_amount')) * 100, 1) : 0 }}%
+                                        </span>
                                     </div>
-                                    <p class="text-xs text-gray-500 mt-1">
-                                        {{ $topServices->sum('total_amount') > 0 ? number_format(($service->total_amount / $topServices->sum('total_amount')) * 100, 1) : 0 }}%
-                                        dari total
-                                    </p>
                                 </div>
                             </div>
                         @empty
@@ -881,15 +880,14 @@
                             <!-- Service performance insights -->
                             <div class="mt-4 pt-4 border-t border-gray-200">
                                 <div class="grid grid-cols-2 gap-4 text-center">
-                                    <div>
+                                    <div class="min-w-0">
                                         <p class="text-xs text-gray-500">Layanan Terbaik</p>
-                                        <p class="font-semibold text-green-600 text-sm">
+                                        <p class="font-semibold text-green-600 text-sm truncate" title="{{ $topServices->first()->name ?? 'N/A' }}">
                                             {{ $topServices->first()->name ?? 'N/A' }}</p>
                                     </div>
                                     <div>
                                         <p class="text-xs text-gray-500">Total Revenue</p>
-                                        <p class="font-semibold text-blue-600 text-sm">Rp
-                                            {{ number_format($topServices->sum('total_amount'), 0, ',', '.') }}</p>
+                                        <p class="font-semibold text-blue-600 text-sm whitespace-nowrap">Rp {{ number_format($topServices->sum('total_amount'), 0, ',', '.') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -901,10 +899,10 @@
             <!-- Enhanced Activity and Analytics Section -->
             <div class="grid grid-cols-1 lg:grid-cols-1 gap-6">
                 <!-- Enhanced Recent Transactions with Analytics -->
-                <div class="lg:col-span-2 analytics-card p-6">
-                    <div class="flex items-center justify-between mb-6">
+                <div class="lg:col-span-2 analytics-card p-4 sm:p-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
                         <h3 class="text-xl font-semibold text-gray-800">Aktivitas Transaksi Real-time</h3>
-                        <div class="flex items-center space-x-4">
+                        <div class="flex flex-wrap items-center gap-3 sm:space-x-4">
                             <div class="flex items-center text-sm text-gray-600">
                                 <span class="w-2 h-2 bg-green-500 rounded-full mr-1"></span>
                                 <span>Pemasukan</span>
